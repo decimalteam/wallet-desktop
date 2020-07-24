@@ -18,9 +18,6 @@ const linuxOS = {
     target: 'deb',
     category: 'Utility',
   },
-  asar: {
-    smartUnpack: true,
-  },
 };
 
 const macOS = {
