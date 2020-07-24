@@ -1,0 +1,79 @@
+@mixin btn {
+  transition: color .35s, background-color .35s;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin btn_blue {
+  background: $soft-blue;
+  color: white;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0.05em;
+  
+  &:hover {
+    background: $soft-blue-hover;
+    border-color: $soft-blue-hover;
+  }
+}
+
+@mixin noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+@mixin monospace {
+  font-family: $mono;
+  font-size: 14px;
+}
+
+@mixin input-label {
+  // position: absolute;
+  // bottom: calc(100% + 7px);
+  // left: 0;
+  font-size: 14px;
+  line-height: 153.95%;
+  color: rgba(#fff, .7);
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  // white-space: nowrap;
+  max-width: 100%;
+  margin-bottom: 7px;
+
+  &.hidden-label {
+    visibility: hidden;
+
+    @media (max-width: 991px) {
+      display: none;
+    }
+  }
+}
+
+@mixin input-subtext {
+  font-size: 14px;
+  line-height: 153.95%;
+  color: rgba(#fff, .5);
+  margin-top: 7px;
+  word-break: break-word;
+}
+
+@mixin scrollbar {
+  scrollbar-color: $soft-blue transparent;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $soft-blue;
+  }
+}

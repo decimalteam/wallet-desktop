@@ -1,0 +1,62 @@
+{
+  "auth": {
+    "title": "Decimal Wallet",
+    "welcome-to": "Welcome to",
+    "generate": "Genarate address",
+    "or": "or",
+    "send-phrase": "Send phrase",
+    "activate": "Activate",
+    "save-note": "Save this phrase in case you plan to use this address in the future",
+    "you-phrase": "You phrase",
+    "copy": "Copy",
+    "copied": "Copied",
+    "save-confirm": "I've saved the phrase",
+    "next": "Next"
+  },
+  "menu": {
+    "decimal": "Decimal",
+    "wallet": "Wallet",
+    "my-coins": "My coins",
+    "convert": "Convert",
+    "services": "Decimal services",
+    "explorer": "Explorer",
+    "console": "Console",
+    "status": "Status",
+    "calculator": "Calculator",
+    "help": "Help"
+  },
+  "wallet": {
+    "title": "Wallet",
+    "wallet": "Wallet",
+    "balance": "Balance",
+    "copy": "Copy",
+    "copied": "Copied",
+    "transaction": "Transaction",
+    "last": "Last transaction",
+    "block": "Block",
+    "time": "Time",
+    "sender": "Sender",
+    "type": "Type",
+    "amount": "Amount"
+  },
+  "my-coins": {
+    "title": "My coins",
+    "balance": "Balance",
+    "history": "History",
+    "convert": "Convert",
+    "search": "Search"
+  },
+  "convert": {
+    "title": "Convert",
+    "you-pay": "You pay",
+    "you-receive": "You receive",
+    "amount": "Amount",
+    "all": "All",
+    "coin-to-pay-fee": "Coin to pay fee",
+    "coin": "Coin",
+    "message": "Message",
+    "input-text": "Input text",
+    "convert": "Convert",
+    "history": "History"
+  }
+}
