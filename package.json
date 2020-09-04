@@ -27,7 +27,7 @@
     },
     "mac": {
       "target": "dmg",
-      "icon": "build/icons/con.icns"
+      "icon": "build/icons/icon.icns"
     },
     "linux": {
       "target": "deb",
