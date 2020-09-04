@@ -1,11 +1,11 @@
 {
   "name": "wallet-desktop",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Desktop Wallet Decimal Chain",
   "main": "./dist/main/index.js",
   "build": {
     "productName": "DecimalWallet",
-    "artifactName": "decimal-wallet-1.0.0",
+    "artifactName": "decimal-wallet-1.0.2",
     "appId": "com.decimal.wallet.desktop",
     "files": [
       "./build/**/*",
