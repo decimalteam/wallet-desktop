@@ -53,9 +53,9 @@ module.exports = {
   extends: null,
   // default files: https://www.electron.build/configuration/contents
   files: [
-    'build/**/*',
-    'dist/main/index.js',
-    'package.json',
+    './build/**/*',
+    './dist/main/index.js',
+    './package.json',
     // {
     //   from: 'dist/main/',
     //   to: 'dist/main/',
