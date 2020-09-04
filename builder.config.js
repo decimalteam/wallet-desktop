@@ -50,23 +50,24 @@ module.exports = {
   directories: {
     output: 'build',
   },
+  extends: null,
   // default files: https://www.electron.build/configuration/contents
   files: [
-    './build/**/*',
-    './dist/main/index.js',
+    'build/**/*',
+    'dist/main/index.js',
     'package.json',
-    {
-      from: 'dist/main/',
-      to: 'dist/main/',
-    },
-    {
-      from: 'dist/renderer',
-      to: 'dist/renderer/',
-    },
-    {
-      from: 'src/resources/',
-      to: 'dist/resources/',
-    },
+    // {
+    //   from: 'dist/main/',
+    //   to: 'dist/main/',
+    // },
+    // {
+    //   from: 'dist/renderer',
+    //   to: 'dist/renderer/',
+    // },
+    // {
+    //   from: 'src/resources/',
+    //   to: 'dist/resources/',
+    // },
   ],
   ...windowsOS,
   ...linuxOS,
