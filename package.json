@@ -5,6 +5,7 @@
   "main": "./dist/main/index.js",
   "build": {
     "productName": "DecimalWallet",
+    "artifactName": "decimal-wallet-1.0.0",
     "appId": "com.decimal.wallet.desktop",
     "files": [
       "./build/**/*",
@@ -31,12 +32,13 @@
     },
     "linux": {
       "target": "deb",
-      "icon": "build/icons/"
+      "icon": "build/icons/",
+      "category": "Utility"
     },
     "win": {
       "target": "nsis",
-      "publisherName": "michal",
-      "icon": "build/icons/win-icon.ico"
+      "publisherName": "decimalteam",
+      "icon": "build/icons/icon.ico"
     },
     "nsis": {
       "differentialPackage": true
