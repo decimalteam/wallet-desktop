@@ -1,18 +1,16 @@
 /* eslint-disable */
-import Decimal from 'decimal-js-sdk';
-
 let store;
 if (process.browser) {
   window.onNuxtReady(async ({ $store }) => {
     store = $store;
 
-    const baseURL = store.getters['decimal/getBaseURL'];
-    // const chainId = store.getters['decimal/getChainId'];
-    // const decimal = new Decimal({ baseURL, chainId });
-    const decimal = new Decimal({ baseURL });
+    const baseURL = process.env.baseURL;
+    const baseCoin = process.env.baseCoin;
+    const network = process.env.network;
 
-    store.commit('decimal/setSDK', decimal);
-    store.dispatch('wallet/GET_USER');
-    // store.dispatch('wallet/GET_MY_VALIDATOR');
+
+    store.commit('decimal/setBaseURL', baseURL);
+    store.commit('decimal/setBaseCoin', baseCoin);
+    store.commit('decimal/setNetwork', network);
   });
 }

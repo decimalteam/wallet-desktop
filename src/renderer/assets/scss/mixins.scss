@@ -37,15 +37,9 @@
 }
 
 @mixin input-label {
-  // position: absolute;
-  // bottom: calc(100% + 7px);
-  // left: 0;
   font-size: 14px;
   line-height: 153.95%;
   color: rgba(#fff, .7);
-  // overflow: hidden;
-  // text-overflow: ellipsis;
-  // white-space: nowrap;
   max-width: 100%;
   margin-bottom: 7px;
 
@@ -56,6 +50,33 @@
       display: none;
     }
   }
+}
+
+@mixin detail-prop-label {
+  min-width: 190px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 93.95%;
+  letter-spacing: 0.01em;
+  color: $gray;
+
+  @media (max-width: 768px) {
+    min-width: 130px;
+    font-size: 14px;
+  }
+  @media (max-width: 600px){
+    margin-bottom: 10px;
+    font-size: 11px;
+  }
+}
+
+@mixin detail-prop-value {
+  font-size: 14px;
+  line-height: 130%;
+  color: rgba($gray, .5);
+  word-break: break-word;
+  display: flex;
+  align-items: center;
 }
 
 @mixin input-subtext {
@@ -70,6 +91,10 @@
   scrollbar-color: $soft-blue transparent;
   scrollbar-width: thin;
   &::-webkit-scrollbar {
+    @media (max-width: 767px) {
+      height: 3px;
+    }
+    height: 6px;
     width: 8px;
     background: transparent;
   }

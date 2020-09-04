@@ -14,47 +14,51 @@
   "author": "DecimalTeam <info@decimalchain.com>",
   "license": "MIT",
   "homepage": "https://decimalchain.com/",
-  "engines" : {
-    "node" : ">=12.13.0"
+  "engines": {
+    "node": ">=12.13.0"
   },
   "resolutions": {
     "@types/node": "12.12.6"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.11.0",
-    "bignumber.js": "^9.0.0",
-    "decimal-js-sdk": "^0.1.8",
-    "decimal.js-light": "^2.5.0",
-    "nuxt": "^2.0.0",
-    "nuxt-i18n": "^6.6.0",
+    "@nuxtjs/axios": "^5.12.1",
+    "bootstrap-vue": "^2.16.0",
+    "decimal-js-sdk": "^0.1.31",
+    "decimal.js": "^10.2.0",
+    "nuxt": "^2.14.1",
+    "nuxt-i18n": "^6.13.6",
+    "source-map-support": "^0.5.19",
+    "vee-validate": "^3.3.8",
     "vue-click-outside": "^1.1.0",
+    "vue-simple-suggest": "^1.10.1",
     "vuescroll": "^4.15.1"
-  },  
+  },
   "devDependencies": {
+    "@babel/compat-data": "^7.10.1",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/style-resources": "^1.0.0",
     "@xpda-dev/core": "^0.1.5",
-    "@xpda-dev/electron-launcher": "^0.2.1",
     "@xpda-dev/electron-builder": "^0.2.1",
+    "@xpda-dev/electron-launcher": "^0.2.1",
     "@xpda-dev/webpack-step": "^0.1.2",
-    "deepmerge": "4.2.2",
+    "babel-eslint": "^10.0.1",
     "browser-env": "3.3.0",
     "cross-env": "7.0.2",
+    "deepmerge": "4.2.2",
     "electron": "8.3.0",
     "electron-builder": "22.7.0",
     "electron-debug": "3.0.1",
-    "native-ext-loader": "2.3.0",    
-    "vue-devtools": "5.1.3",
-    "webpack": "4.43.0",
-    "webpack-node-externals": "1.7.2",
-    "@babel/compat-data": "^7.10.1",
-    "@nuxtjs/style-resources": "^1.0.0",
-    "babel-eslint": "^10.0.1",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-vue": "^6.2.2",
+    "native-ext-loader": "2.3.0",
     "node-sass": "^4.13.1",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^8.0.2",
+    "vue-devtools": "5.1.3",
+    "webpack": "4.43.0",
+    "webpack-node-externals": "1.7.2"
   }
 }

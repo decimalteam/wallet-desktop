@@ -3,7 +3,13 @@ export default {
   setSDK(state, data) {
     state.sdk = data;
   },
-  // setCoinsList(state, data) {
-  //   state.coinsList = data;
-  // },
+  setBaseCoin(state, coin) {
+    state.baseCoin = coin;
+  },
+  setNetwork(state, network) {
+    state.network = network;
+  },
+  setBaseURL(state, baseURL) {
+    state.baseURL = baseURL;
+  },
 };

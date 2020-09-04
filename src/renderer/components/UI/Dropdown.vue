@@ -1,8 +1,7 @@
 <template>
   <div
     :id="id"
-    class="dd dd--3"
-    :class="{ 'dd--3': mode === 3 }"
+    class="dd"
   >
     <div
       class="dd__label"
@@ -13,54 +12,17 @@
     <div
       v-click-outside="hide"
       class="dd__btn"
-      :class="{'dd__btn--disable': disabled}"
+      :class="{'dd__btn--disable': disabled, 'error': error}"
       @click="toggleDd"
     >
       <div
-        v-if="mode === 1"
-        class="dd__title dd__title--1"
-      >
-        {{ title }}
-      </div>
-      <div
-        v-if="mode === 2"
         class="dd__title dd__title--2 text-mono"
       >
         {{ value }}
       </div>
       <div
-        v-if="mode === 3"
-        class="dd--3__box"
-      >
-        <img
-          src="~assets/imgs/decimal-icon.svg"
-          alt="icon"
-          width="38"
-          height="38"
-          class="mr-20"
-        >
-        <div class="dd--3__text-dark mr-10">
-          DEL
-        </div>
-        <div class="dd--3__coin-title mr-40">
-          Decimal
-        </div>
-        <div class="dd--3__text-dark mr-10">
-          Balance:
-        </div>
-        <div class="dd--3__balance">
-          12.334
-        </div>
-      </div>
-      <div
         class="dd__left"
       >
-        <div
-          v-if="mode === 1"
-          class="dd__value text-mono"
-        >
-          {{ value }}
-        </div>
         <div class="dd__img">
           <img
             src="~assets/imgs/icons/arrow_bottom.svg"
@@ -70,7 +32,7 @@
       </div>
 
       <div
-        v-if="mode === 1 || mode === 3"
+        v-if="mode === 1"
         class="dd__options"
         :class="{'dd__options_show': show }"
       >
@@ -89,7 +51,7 @@
               {{ item.coin }}
             </div>
             <div class="dd__option__right">
-              {{ item.balance | formatAmount }}
+              {{ item.balance | formatAmount(currentLocale) }}
             </div>
           </div>
         </vue-scroll>
@@ -155,6 +117,10 @@ export default {
     label: {
       type: String,
       default: '',
+    },
+    error: {
+      type: Boolean,
+      default: false,
     },
   },
   data: () => ({
@@ -232,132 +198,114 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .dd {
-    position: relative;
-    color: rgba($grey, .5);
+.darken {
+  & .dd__btn {
+    background: #292938;
+  }
+}
+.dd {
+  position: relative;
+  color: rgba($grey, .5);
 
-    &__label {
-      @include input-label;
+  &__label {
+    @include input-label;
 
-      &.hidden-label {
-        visibility: hidden;
-        display: none;
-      }
-    }
-
-    &__title {
-      font-size: 14px;
-      // white-space: nowrap;
-      &--2 {
-        color: white;
-        max-width: calc(100% - 30px);
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-
-    &__btn {
-      cursor: pointer;
-      padding: 0 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-radius: 10px;
-      background: rgba($grey, .08);
-      width: 100%;
-      height: 56px;
-      border: 1px solid transparent;
-      transition: .35s;
-      position: relative;
-
-      &--disable {
-        cursor: default;
-        opacity: .7;
-        border: 1px solid transparent !important;
-      }
-
-      &:hover {
-        border-color: $soft-blue;
-      }
-    }
-
-    &__left {
-      display: flex;
-      align-items: center;
-      padding-left: 7px;
-    }
-
-    &__img {
-      margin: 0 0 0 12px;
-    }
-
-    &__options {
-      position: absolute;
-      z-index: 400;
-      border-radius: 10px;
-      width: 100%;
-      background: #262636;;
-      top: calc(100% + 10px);
-      left: 0;
+    &.hidden-label {
       display: none;
-      &_show {
-        display: block;
-      }
-    }
-
-    &__option {
-      padding: 18px 20px;
-      padding-top: 0;
-      transition: .25s;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      max-width: 100%;
-
-      &--first {
-        padding-top: 18px;
-      }
-
-      &:hover {
-        color: #FFFFFF;
-      }
-
-      &__left {
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-
-    .dd-scroll {
-      height: 200px !important;
     }
   }
-  .dd--3 {
-    font-size: 16px;
-    & .dd__btn {
-      height: 84px;
-      background: #373747;
-      border-radius: 12px;
-    }
-    & .dd__img {
-      opacity: .4;
-    }
-    &__box {
-      color: #fff;
-      display: flex;
-      align-items: center;
-    }
-    &__text-dark {
-      opacity: .3;
-      line-height: 1;
-    }
-    &__coin-title {
-      font-weight: 500;
-      line-height: 1.25;
-    }
-    &__balance {
-      font-weight: bold;
-      line-height: 1.25;
+
+  &__title {
+    font-size: 14px;
+    &--2 {
+      color: white;
+      max-width: calc(100% - 30px);
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
+
+  &__btn {
+    cursor: pointer;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    background: #383848;
+    width: 100%;
+    height: 56px;
+    border: 1px solid transparent;
+    transition: .35s;
+    position: relative;
+
+    &--disable {
+      cursor: default;
+      opacity: .7;
+      border: 1px solid transparent !important;
+    }
+
+    &:hover {
+      border-color: $soft-blue;
+    }
+    &.error {
+      border-color: $red !important;
+    }
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    padding-left: 7px;
+  }
+
+  &__img {
+    margin: 0 0 0 12px;
+    opacity: .4;
+  }
+
+  &__options {
+    position: absolute;
+    z-index: 400;
+    border-radius: 10px;
+    width: 100%;
+    background: #262636;;
+    top: calc(100% + 10px);
+    left: 0;
+    display: none;
+    &_show {
+      display: block;
+    }
+  }
+
+  &__option {
+    padding: 18px 20px;
+    padding-top: 0;
+    transition: .25s;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    max-width: 100%;
+
+    &--first {
+      padding-top: 18px;
+    }
+
+    &:hover {
+      color: #FFFFFF;
+    }
+
+    &__right {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &__left {
+      margin-right: 10px;
+    }
+  }
+
+  .dd-scroll {
+    height: 200px !important;
+  }
+}
 </style>

@@ -27,11 +27,12 @@
         {{ $t('auth.or') }}
       </div>
       <CustomInput
-        v-model="seedPhrase"
-        class="w-100 mb-30"
+        v-model.trim="seedPhrase"
+        class="w-100 mb-30 darken"
         :placeholder="$t('auth.send-phrase')"
         :error="mnemonicError"
         without-label
+        @blur="removeSpecSymbols"
       />
       <button
         class="main-btn"
@@ -103,19 +104,18 @@ import CustomInput from '~/components/UI/Input';
 import CustomSwitch from '~/components/UI/Switch';
 
 export default {
-  layout: 'empty',
   components: {
     CustomInput, CustomSwitch,
   },
   middleware: 'guest',
   data() {
     return {
-      newWalletPage: false, // флаг перключения на регистрацию/авторизацию
-      copiedClass: false, // для 400мс active класса на кнопке копирования
-      confirmSavedPhrase: false, // подтвердили, что скопировали фразу
-      seedPhrase: '', // наша мнемоник фраза
-      generatedWallet: null, // новый мнемоник
-      mnemonicError: false, // статус ошибка мнемоника
+      newWalletPage: false,
+      copiedClass: false,
+      confirmSavedPhrase: false,
+      seedPhrase: '',
+      generatedWallet: null,
+      mnemonicError: false,
     };
   },
   watch: {
@@ -124,18 +124,21 @@ export default {
     },
   },
   methods: {
+    removeSpecSymbols() {
+      if (this.seedPhrase.charCodeAt(0) === 0xFEFF) {
+        this.seedPhrase = this.seedPhrase.substr(1);
+      }
+
+      this.seedPhrase = this.seedPhrase.replace(/[^a-zA-Z ]/g, '');
+      this.seedPhrase = this.seedPhrase.replace(/\n/g, ' ');
+      this.seedPhrase = this.seedPhrase.replace(/\s+/g, ' ').trim();
+    },
     copyPhrase() {
-      const copyText = this.generatedWallet.mnemonic;
-      const aux = document.createElement('input');
-      aux.setAttribute('value', copyText);
-      document.body.appendChild(aux);
-      aux.select();
-      document.execCommand('copy');
-      document.body.removeChild(aux);
+      this.copyText(this.generatedWallet.mnemonic);
       this.copiedClass = true;
       setTimeout(() => {
         this.copiedClass = false;
-      }, 400);
+      }, 1000);
     },
     activate() {
       if (this.seedPhrase) {
@@ -165,6 +168,7 @@ export default {
     },
     createWallet() {
       this.generatedWallet = this.generateWallet();
+      this.seedPhrase = this.generatedWallet.mnemonic;
     },
     back() {
       this.newWalletPage = false;

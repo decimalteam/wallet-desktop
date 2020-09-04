@@ -8,24 +8,10 @@ export default {
   },
   logout(state) {
     state.wallet = null;
-    // state.balance = 0;
+    state.balance = 0;
     state.user = null;
-    // state.multisig = null;
-    // state.multisigsList = null;
   },
-  // setMultisigAddress(state, address) {
-  //   state.multisig = address;
-  // },
-  // setMultisigsList(state, multisigs) {
-  //   state.multisigsList = multisigs;
-  // },
-  // setLastUpdated(state, timestamp) {
-  //   state.lastUpdated = timestamp;
-  // },
-  // setUserStakes(state, stakes) {
-  //   state.stakes = stakes;
-  // },
-  // setMyValidator(state, address) {
-  //   state.myValidator = address;
-  // },
+  setBaseCoinInfo(state, baseCoinInfo) {
+    state.baseCoinInfo = baseCoinInfo;
+  },
 };

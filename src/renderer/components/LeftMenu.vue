@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <section>
     <div class="burger">
       <button
         class="burger-btn"
@@ -13,7 +13,7 @@
         >
       </button>
       <h2 class="ml-20">
-        Title
+        {{ title }}
       </h2>
     </div>
     <div
@@ -31,17 +31,6 @@
           {{ $t('menu.decimal') }}
         </div>
       </div>
-      <button
-        class="icon-btn logout"
-        @click="logout()"
-      >
-        <img
-          width="22"
-          height="22"
-          src="~assets/imgs/icons/logout.svg"
-          alt="back"
-        >
-      </button>
       <div class="navigation">
         <nuxt-link
           class="item-box"
@@ -125,7 +114,7 @@
         </div>
         <a
           target="_blank"
-          href="https://explorer.decimalchain.com/"
+          :href="`https://${getSubdomen()}explorer.decimalchain.com/`"
           class="item-box"
         >
           <div class="link-name">
@@ -142,7 +131,7 @@
         </a>
         <a
           target="_blank"
-          href="https://testnet.console.decimalchain.com/"
+          :href="`https://${getSubdomen()}console.decimalchain.com/`"
           class="item-box"
         >
           <div class="link-name">
@@ -159,7 +148,7 @@
         </a>
         <a
           target="_blank"
-          href="https://status.decimalchain.com/"
+          :href="`https://status.decimalchain.com/`"
           class="item-box"
         >
           <div class="link-name">
@@ -176,24 +165,7 @@
         </a>
         <a
           target="_blank"
-          href="/"
-          class="item-box"
-        >
-          <div class="link-name">
-            {{ $t('menu.wallet') }}
-          </div>
-          <div class="arrow-box">
-            <img
-              class="arrow"
-              width="5"
-              src="~assets/imgs/icons/arrow-right.svg"
-              alt="arrow-right"
-            >
-          </div>
-        </a>
-        <a
-          target="_blank"
-          href="https://calculator.decimalchain.com/"
+          :href="`https://calculator.decimalchain.com/`"
           class="item-box"
         >
           <div class="link-name">
@@ -210,7 +182,7 @@
         </a>
         <a
           target="_blank"
-          href="https://help.decimalchain.com/"
+          :href="`https://help.decimalchain.com/`"
           class="item-box"
         >
           <div class="link-name">
@@ -241,16 +213,30 @@
         >
           Ru
         </div>
+        <button
+          class="icon-btn logout"
+          @click="logout()"
+        >
+          <img
+            width="22"
+            height="22"
+            src="~assets/imgs/icons/logout.svg"
+            alt="back"
+          >
+        </button>
       </div>
     </div>
-    <div class="container__main">
-      <nuxt />
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
 export default {
+  props: {
+    title: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       menuOpen: false,
@@ -272,15 +258,15 @@ export default {
     changeLang(lang) {
       this.lang = lang;
     },
-    logout() {
-      // const isConfirm = await this.$confirm.open({
-      //   mode: 'confirm',
-      //   title: this.$t('notify.confirm-logout-title'),
-      //   text: this.$t('notify.confirm-logout-text'),
-      // });
+    async logout() {
+      const isConfirm = await this.$confirm.open({
+        mode: 'confirm',
+        title: this.$t('notify.confirm-logout-title'),
+        text: this.$t('notify.confirm-logout-text'),
+        locales: this._getModalLocales(),
+      });
 
-      // if (!isConfirm) return;
-
+      if (!isConfirm) return;
       this.$store.commit('wallet/logout');
       localStorage.removeItem('wallet');
       this.$router.push('/');
@@ -291,7 +277,7 @@ export default {
 
 <style lang="scss" scoped>
 .logout {
-  margin-left: 40px;
+  margin-left: auto;
   width: 35px;
   min-width: 35px;
   height: 35px;
@@ -306,32 +292,40 @@ export default {
   align-items: center;
   top: 0;
   left: 0;
-  padding: 15px;
+  height: 72px;
+  padding: 0 15px;
   @media (min-width: 1365px) {
     display: none;
   }
 }
+h2 {
+  @media (max-width: 479px) {
+    font-size: 18px;
+    margin-right: 110px;
+    word-break: break-word;
+  }
+}
 .menu-box {
   @media (max-width: 1365px) {
-    transition: width .35s, min-width .35s;
-    width: 0;
-    min-width: 0;
-    z-index: 90;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
+    transition: transform .35s;
+    min-width: 275px;
+    width: 275px;
+    transform: translateX(-275px);
     &.open {
-      min-width: 275px;
-      width: 275px;
+      transform: translateX(0);
     }
     & .header {
       display: none;
     }
-    & .logout {
+    & .navigation {
       margin-top: 92px !important;
     }
   }
+  z-index: 90;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
   overflow-x: hidden;
   white-space: nowrap;
   background-color: #2A2A38;
@@ -343,7 +337,7 @@ export default {
   display: flex;
   flex-direction: column;
   & .header {
-    padding: 40px 40px 20px;
+    padding: 40px;
     & .title {
       margin-top: 20px;
       font-size: 30px;
@@ -352,7 +346,6 @@ export default {
     }
   }
   & .navigation {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
     & .item-box {
@@ -401,11 +394,11 @@ export default {
     & .item-box {
       display: flex;
       align-items: center;
-      padding: 15px 30px;
+      padding: 10px 30px;
       opacity: .7;
-      transition: opacity .35s; // нет в дизайне
+      transition: opacity .35s;
       &:hover {
-        opacity: 1; // нет в дизайне
+        opacity: 1;
       }
       & .link-name {
         font-weight: 500;

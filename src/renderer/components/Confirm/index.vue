@@ -53,12 +53,12 @@
               {{ msg.text }}
             </p>
             <p v-if="msg.hash">
-              Transaction hash:
+              {{ msg.locales.txHash }}
             </p>
             <a
               v-if="msg.hash"
-              :href="`http://explorer.decimalchain.com/transactions/${msg.hash}`"
               target="_blank"
+              :href="`${getTxLink(msg.hash, msg.network)}`"
               rel="noopener noreferrer"
             >{{ msg.hash }}</a>
           </div>
@@ -77,13 +77,13 @@
                 class="btn btn--cancel"
                 @click="close(0)"
               >
-                Canсel
+                {{ msg.locales.cancel }}
               </button>
               <button
                 class="btn btn--confirm"
                 @click="close(1)"
               >
-                Confirm
+                {{ msg.locales.confirm }}
               </button>
             </div>
             <div
@@ -94,7 +94,7 @@
                 class="btn btn--ok"
                 @click="close(0)"
               >
-                OK
+                {{ msg.locales.ok }}
               </button>
             </div>
           </div>

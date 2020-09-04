@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import DecimalJS from 'decimal.js-light';
+import DecimalNumber from 'decimal.js';
 import Vue from 'vue';
 import {
   ValidationProvider,
@@ -14,6 +14,8 @@ import {
   min,
   max_value,
 } from 'vee-validate/dist/rules';
+
+DecimalNumber.set({ precision: 40 });
 
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
@@ -40,7 +42,7 @@ extend('numeric', {
     const number = parseFloat(value);
     isValid = !Number.isNaN(number);
 
-    if (isValid && new DecimalJS(value).lt(0.000000000000000001)) {
+    if (isValid && new DecimalNumber(value).lt(0.000000000000000001)) {
       isValid = false;
     }
 

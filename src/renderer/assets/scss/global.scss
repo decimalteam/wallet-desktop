@@ -7,11 +7,13 @@ html {
   font-size: 16px;
 }
 body {
+  @include scrollbar;
   color: #FFF;
   background-color: $light-black;
   font-family: $montserrat;
   background-size: calc(100% + calc(100vw - 100%));
   background-repeat: no-repeat;
+  overflow-x: hidden;
 }
 h2 {
   font-size: 25px;
@@ -62,6 +64,9 @@ a {
 .mr-10 {
   margin-right: 10px;
 }
+.mr-auto {
+  margin-right: auto;
+}
 .mr-15 {
   margin-right: 15px;
 }
@@ -74,6 +79,9 @@ a {
 .ml-20 {
   margin-left: 20px;
 }
+.mt-20 {
+  margin-top: 20px;
+}
 .px-20 {
   padding-left: 20px;
   padding-right: 20px;
@@ -84,15 +92,24 @@ a {
 .d-flex {
   display: flex;
 }
+.content-wrap {
+  display: flex;
+  width: 100%;
+}
 .container {
   position: relative;
   display: flex;
   width: 100vw;
   min-height: 100vh;
 }
+.scroll-x {
+  overflow-x: auto;
+  @include scrollbar;
+}
 .container__main {
   position: relative;
   width: 100%;
+  margin-left: 275px;
   overflow: overlay;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -157,7 +174,7 @@ input[type=number] {
 }
 
 .content {
-  padding: 40px;
+  padding: 40px 40px 20px;
   width: 100%;
 }
 
@@ -185,7 +202,6 @@ input[type=number] {
     justify-content: space-between;
 
     @media (min-width: 426px) and (max-width: 768px) {
-      // margin-bottom: 20px;
       flex-direction: column-reverse;
       align-items: flex-end;
     }
@@ -198,21 +214,13 @@ input[type=number] {
   &__items {
     display: grid;
     grid-gap: 30px;
-    // grid-row-gap: 54px;
-    // grid-column-gap: 30px;
-    // margin-top: 24px;
   }
 
   &__header {
     display: flex;
     justify-content: space-between;
-    // padding: 20px;
-    // padding-top: 0;
     margin-bottom: 30px;
   }
-
-  // &__body {
-  // }
 
   &__title {
     font-family: $montserrat;
@@ -256,17 +264,13 @@ input[type=number] {
 }
 .switch {
   display: flex;
-  margin-left: 20px;
-
+  
   &__label {
-    margin-right: 0px;
+    margin-right: 20px;
+    margin-left: 10px;
     white-space: nowrap;
     font-size: 17px;
     line-height: 1;
-
-    @media (max-width: 425px) {
-      display: none;
-    }
   }
 }
 
@@ -277,16 +281,15 @@ input[type=number] {
   font-weight: 500;
   font-size: 18px;
   border-radius: 10px;
-  // font-family: $roboto;
   @include btn_blue;
   @include btn;
   &__dis {
     font-weight: 400;
-    background: rgba($grey, .14);
+    background: #383848;
     cursor: default;
     &:hover {
       font-weight: 400;
-      background: rgba($grey, .14);
+      background: #383848;
     }
   }
 }
@@ -355,6 +358,7 @@ input[type=number] {
 }
 
 .info-wrap {
+  flex-wrap: wrap;
   display: flex;
   justify-content: space-between;
   margin-left: -20px;
@@ -363,6 +367,10 @@ input[type=number] {
     padding-right: 20px;
     padding-left: 20px;
     width: 50%;
+    @media (max-width: 991px) {
+      width: 100%;
+    }
+    margin-bottom: 20px;
   }
 }
 
@@ -378,9 +386,37 @@ input[type=number] {
   justify-content: space-between;
   background-color: #2A2A38;
   .coin-icon {
+    border-radius: 50%;
     position: absolute;
     top: 20px;
     right: 20px;
+  }
+  & .send-coin-btn {
+    position: absolute;
+    border-radius: 18px;
+    padding-left: 10.5px;
+    padding-right: 10.5px;
+    height: 36px;
+    background-color: $soft-blue;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    transition: background-color .35s;
+    & .text {
+      display: inline-block;
+      white-space: nowrap;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      overflow: hidden;
+      margin-right: 10px;
+    }
+    &:hover {
+      background-color: $soft-blue-hover;
+    }
   }
   & .title {
     font-size: 14px;
@@ -388,15 +424,28 @@ input[type=number] {
     opacity: .5;
   }
   & .count {
+    @media (max-width: 767px) {
+      font-size: 26px;
+    }
+    @media (max-width: 479px) {
+      font-size: 22px;
+    }
     display: flex;
     font-size: 40px;
     font-weight: 600;
     line-height: 49px;
     & .currency {
+      @media (max-width: 767px) {
+        font-size: 22px;
+        margin-left: 15px;
+      }
+      @media (max-width: 479px) {
+        font-size: 18px;
+        margin-left: 10px;
+      }
       font-size: 30px;
       font-weight: 800;
       margin-left: 30px;
-      text-transform: uppercase;
     }
   }
   & .cost {
@@ -407,95 +456,9 @@ input[type=number] {
   }
 }
 
-.history-table {
-  border-collapse: collapse;
-  width: 100%;
-  & th, td {
-    white-space: nowrap;
-    padding-top: 13px;
-    padding-bottom: 13px;
-    border-bottom: 1px solid #262637;
-    text-align: left;
-    &:first-child {
-      padding-left: 0;
-    }
-    &:last-child {
-      padding-right: 0;
-    }
-  }
-  & th:last-child, td:last-child {
-    text-align: right;
-  }
-  & .icon {
-    background-color: #2C2C3E;
-    border-radius: 5px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  & .operation {
-    font-weight: 500;
-    line-height: 1.25;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  & .date {
-    width: 100%;
-    line-height: 1.25;
-    opacity: .4;
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-  & .big-text {
-    font-size: 18px;
-    line-height: 1.23;
-    font-weight: bold;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-
-.transaction-table {
-  border-collapse: collapse;
-  width: 100%;
-  & th, td {
-    text-align: left;
-  }
-  & th:last-child, td:last-child {
-    text-align: right;
-  }
-  & th {
-    font-size: 14px;
-    line-height: 1.3;
-    font-weight: 400;
-    color: $soft-blue;
-    padding: 14px 15px;
-    border-bottom: 1px solid #2A2A38;
-    &:first-child {
-      padding-left: 0;
-    }
-    &:last-child {
-      padding-right: 0;
-    }
-  }
-  & td {
-    &.small-text {
-      font-size: 14px;
-      opacity: .4;
-    }
-    line-height: 1.3;
-    font-weight: 400;
-    padding: 20px 15px;
-    border-bottom: 1px solid #2A2A38;
-    &:first-child {
-      padding-left: 0;
-    }
-    &:last-child {
-      padding-right: 0;
-    }
-  }
+.pagination.b-pagination {
+  margin-left: auto;
+  margin-top: 15px;
 }
 
 .filed {
@@ -561,20 +524,16 @@ input[type=number] {
       margin: 0 16px 0 0;
     }
   }
-  // .content {
-  //   // padding: 0 80px 20px;
-  // }
   .box {
     &__body {
       margin: 0;
     }
-    // padding: 30px;
-
   }
 }
 .burger-btn {
   width: 42px;
   height: 42px;
+  min-width: 42px;
   background: $soft-blue;
   color: #fff;
   border-radius: 10px;
@@ -589,13 +548,18 @@ input[type=number] {
 }
 @media (max-width: 1365px) {
   .content {
-    padding: 0 15px 15px;
+    padding: 0 15px;
     & > .title {
       display: none;
     }
+    & > .title2 {
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
   }
   .container__main {
-    margin: 72px 0 0;
+    margin-top: 72px;
+    margin-left: 0;
     display: flex;
     flex-direction: column;
     .submenu:first-child {
@@ -608,11 +572,6 @@ input[type=number] {
   .boxes {
     grid-gap: 20px;
   }
-
-  // .box {
-  //   padding-top: 0;
-  //   padding-bottom: 0;
-  // }
 }
 
 @media (max-width: 991px) {

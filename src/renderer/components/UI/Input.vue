@@ -1,7 +1,6 @@
 <template>
   <div>
     <div
-      v-if="!withoutLabel"
       class="input__label"
       :class="{'hidden-label' : !label}"
     >
@@ -12,6 +11,17 @@
       :class="{'input--error': error, 'input--focused': focused, 'input--disabled': disabled}"
       @click="setFocus"
     >
+      <div
+        v-if="icon"
+        class="input__icon"
+      >
+        <img
+          src="~assets/imgs/icons/search.svg"
+          alt="icon"
+          width="21"
+          height="21"
+        >
+      </div>
       <slot name="input">
         <input
           v-if="type === 'number' && !focused && value"
@@ -54,11 +64,12 @@
   </div>
 </template>
 <script>
-/* eslint-disable vue/require-default-prop */
-import DecimalJS from 'decimal.js-light';
-
 export default {
   props: {
+    icon: {
+      type: String,
+      default: '',
+    },
     type: {
       type: String,
       default: 'text',
@@ -162,16 +173,17 @@ export default {
 
       if (this.value && this.type === 'number' && !this.readonly) {
         try {
-          let number = new DecimalJS(this.value);
+          let number = this.DecimalNumber(this.value);
 
-          if (this.min && number.lessThan(this.min)) number = new DecimalJS(this.min);
-          if (this.max && number.greaterThan(this.max)) number = new DecimalJS(this.max);
+          if (this.min && number.lessThan(this.min)) number = this.DecimalNumber(this.min);
+          if (this.max && number.greaterThan(this.max)) number = this.DecimalNumber(this.max);
           number = number.toFixed();
           this.$emit('input', number);
         } catch (e) {
           this.$emit('input', '');
         }
       }
+      this.$emit('blur');
     },
     enter() {
       this.$emit('enter');
@@ -205,17 +217,21 @@ export default {
   background-color: #383848;
   border-radius: 12px;
 }
+.darken {
+  & .input {
+    background: #292938;
+  }
+}
   .input {
     position: relative;
     display: flex;
     align-items: center;
     height: 56px;
     transition: .35s;
-    background: rgba($gray, 0.08);
+    background: #383848;
     border-radius: 10px;
     border: 1px solid transparent;
     width: 100%;
-    padding-right: 56px;
 
     &--disabled {
       border: 1px solid transparent !important;
@@ -235,9 +251,19 @@ export default {
       right: -1px;
       top: -1px;
     }
-
+    &__icon {
+      position: absolute;
+      left: 16px;
+      opacity: .3;
+      + input {
+        padding-left: 54px !important;
+      }
+    }
     &__label {
       @include input-label;
+      &.hidden-label {
+        display: none;
+      }
     }
     &__tip {
       @include input-subtext;
@@ -266,7 +292,7 @@ export default {
       }
       &::placeholder {
         font-size: 16px;
-        color: #F9F8FB;
+        color: rgba(255, 255, 255, .7);
         opacity: 0.5;
         font-family: $montserrat;
       }

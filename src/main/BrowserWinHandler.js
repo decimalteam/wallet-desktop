@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { BrowserWindow, app } from 'electron';
+import { BrowserWindow, app, shell } from 'electron';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -47,6 +47,11 @@ export default class BrowserWinHandler {
       this.browserWindow = null;
     });
     this._eventEmitter.emit('created');
+
+    this.browserWindow.webContents.on('new-window', (event, url) => {
+      event.preventDefault();
+      shell.openExternal(url);
+    });
   }
 
   _recreate() {

@@ -1,35 +1,19 @@
 /* eslint-disable no-restricted-properties */
 /* eslint-disable no-param-reassign */
 
-import DecimalJS from 'decimal.js-light';
+import DecimalNumber from 'decimal.js';
 
-let store;
-
-if (process.browser) {
-  window.onNuxtReady(async ({ $store }) => {
-    store = $store;
-  });
-}
-
-function getBalanceByCoin(coin) {
-  const coins = store.getters['wallet/getMyCoins'];
-  const result = coins.find((item) => item.coin.toLowerCase() === coin.toLowerCase());
-
-  if (result) {
-    return result.balance;
-  }
-  return new Error('The coin not found');
-}
+DecimalNumber.set({ precision: 100 });
 
 function getAmountFromSatoshi(amount) {
-  return new DecimalJS(amount).times(new DecimalJS(10).pow(-18)).toFixed();
+  return new DecimalNumber(amount).times(new DecimalNumber(10).pow(-18)).toFixed();
 }
 
 function getCoinFormatted(coinData) {
   return {
     supply: getAmountFromSatoshi(coinData.volume),
     reserve: getAmountFromSatoshi(coinData.reserve),
-    crr: new DecimalJS(coinData.crr).div(100).toFixed(),
+    crr: new DecimalNumber(coinData.crr).div(100).toFixed(),
     maxSupply: getAmountFromSatoshi(coinData.limitVolume),
     ticker: coinData.symbol,
   };
@@ -40,13 +24,24 @@ function getCoinFormatted(coinData) {
  * Продажа монеты, подсчет получаемых del
  */
 export const sellCoin = (coin, coinAmount) => {
-  coinAmount = Math.min(coin.supply, coinAmount);
-  if (coin.supply === '0') {
+  const crr = new DecimalNumber(coin.crr).times(100).toNumber();
+
+  if (new DecimalNumber(coinAmount).eq(new DecimalNumber(0))) {
     return '0';
   }
-  const result = coin.reserve * (1 - Math.pow(1 - coinAmount / coin.supply, 1 / coin.crr)); // => del
+  if (new DecimalNumber(coinAmount).eq(new DecimalNumber(coin.supply))) {
+    return coin.reserve;
+  }
+  if (new DecimalNumber(crr).eq(new DecimalNumber(100))) {
+    const ret = new DecimalNumber(coin.reserve).times(new DecimalNumber(coinAmount));
+    return ret.div(new DecimalNumber(coin.supply)).toFixed().toString();
+  }
 
-  return result;
+  const e1 = new DecimalNumber(coinAmount).div(coin.supply);
+  const e2 = new DecimalNumber(1).minus(e1);
+  const e3 = new DecimalNumber(e2).pow(new DecimalNumber(100).div(crr));
+  const e4 = new DecimalNumber(1).minus(e3);
+  return e4.times(coin.reserve).toFixed();
 };
 
 /**
@@ -55,9 +50,9 @@ export const sellCoin = (coin, coinAmount) => {
 */
 export const sellCoinByDel = (coin, delAmount) => {
   delAmount = Math.min(coin.reserve, delAmount);
-  const e1 = new DecimalJS(delAmount).div(coin.reserve);
-  const e2 = new DecimalJS(1).minus(e1).pow(coin.crr);
-  const result = new DecimalJS(1).minus(e2).times(coin.supply); // => coin
+  const e1 = new DecimalNumber(delAmount).div(coin.reserve);
+  const e2 = new DecimalNumber(1).minus(e1).pow(coin.crr);
+  const result = new DecimalNumber(1).minus(e2).times(coin.supply); // => coin
 
   return result.toFixed();
 };
@@ -67,8 +62,8 @@ export const sellCoinByDel = (coin, delAmount) => {
 * Покупка монеты, подсчет получаемых монет
 */
 export const buyCoin = (coin, delAmount) => {
-  const e1 = new DecimalJS(delAmount).div(coin.reserve).plus(1).pow(coin.crr);
-  const result = new DecimalJS(e1).minus(1).times(coin.supply); // => coin
+  const e1 = new DecimalNumber(delAmount).div(coin.reserve).plus(1).pow(coin.crr);
+  const result = new DecimalNumber(e1).minus(1).times(coin.supply); // => coin
 
   return result.toFixed();
 };
@@ -78,18 +73,17 @@ export const buyCoin = (coin, delAmount) => {
 * Покупка монеты, подсчет необходимых del
 */
 export const buyCoinByCoin = (coin, coinAmount) => {
-  const e1 = new DecimalJS(coinAmount).div(coin.supply).plus(1);
-  const e2 = new DecimalJS(1).div(coin.crr);
-  const result = new DecimalJS(e1).pow(e2).minus(1).times(coin.reserve); // => del
+  const e1 = new DecimalNumber(coinAmount).div(coin.supply).plus(1);
+  const e2 = new DecimalNumber(1).div(coin.crr);
+  const result = new DecimalNumber(e1).pow(e2).minus(1).times(coin.reserve); // => del
 
   return result.toFixed();
 };
 
-
 function isLessReserve(spendCoin, amount) {
-  const maxDelSpend = new DecimalJS(spendCoin.reserve).minus(10000).toFixed();
+  const maxDelSpend = new DecimalNumber(spendCoin.reserve).minus(10000).toFixed();
 
-  if (new DecimalJS(amount).gt(maxDelSpend)) {
+  if (new DecimalNumber(amount).gt(maxDelSpend)) {
     return {
       key: 'reserve-limit',
       coin: spendCoin.ticker.toUpperCase(),
@@ -98,9 +92,9 @@ function isLessReserve(spendCoin, amount) {
   return false;
 }
 function isMoreMaxSupply(getCoin, amount) {
-  const available = new DecimalJS(getCoin.maxSupply).minus(getCoin.supply).toFixed(); // => coin
+  const available = new DecimalNumber(getCoin.maxSupply).minus(getCoin.supply).toFixed(); // => coin
 
-  if (new DecimalJS(amount).gt(available)) {
+  if (new DecimalNumber(amount).gt(available)) {
     return {
       key: 'more-limit-volume',
       coin: getCoin.ticker.toUpperCase(),
@@ -108,18 +102,6 @@ function isMoreMaxSupply(getCoin, amount) {
   }
   return false;
 }
-// eslint-disable-next-line no-unused-vars
-function isInfluentFunds(value, spendCoin) {
-  const balance = getBalanceByCoin(spendCoin.ticker);
-  if (new DecimalJS(balance).lt(value)) {
-    return {
-      key: 'influent-funds',
-      coin: spendCoin.ticker.toUpperCase(),
-    };
-  }
-  return false;
-}
-
 
 export function buy(getCoin, amount, spendCoin) {
   spendCoin = getCoinFormatted(spendCoin);
@@ -128,10 +110,10 @@ export function buy(getCoin, amount, spendCoin) {
   let estimated = '';
   let error = false;
 
-  if (getCoin.ticker === 'tdel') {
+  if (getCoin.ticker.toLowerCase() === process.env.baseCoin.toLowerCase()) {
     estimated = sellCoinByDel(spendCoin, amount); // => coin
     error = isLessReserve(spendCoin, amount);
-  } else if (spendCoin.ticker === 'tdel') {
+  } else if (spendCoin.ticker.toLowerCase() === process.env.baseCoin.toLowerCase()) {
     estimated = buyCoinByCoin(getCoin, amount); // => tdel
     error = isMoreMaxSupply(getCoin, amount);
   } else {
@@ -163,10 +145,10 @@ export function sell(spendCoin, amount, getCoin) {
   let estimated = '';
   let error = false;
 
-  if (spendCoin.ticker === 'tdel') {
+  if (spendCoin.ticker.toLowerCase() === process.env.baseCoin.toLowerCase()) {
     estimated = buyCoin(getCoin, amount); // => coin
     error = isMoreMaxSupply(getCoin, estimated);
-  } else if (getCoin.ticker === 'tdel') {
+  } else if (getCoin.ticker.toLowerCase() === process.env.baseCoin.toLowerCase()) {
     estimated = sellCoin(spendCoin, amount);
     error = isLessReserve(spendCoin, amount);
   } else {

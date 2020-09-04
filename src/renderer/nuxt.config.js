@@ -1,6 +1,8 @@
 const localeRU = require('./assets/locales/ru.json');
 const localeEN = require('./assets/locales/en.json');
 
+require('dotenv').config();
+
 module.exports = {
   mode: 'spa',
   head: {
@@ -18,8 +20,9 @@ module.exports = {
   loading: { color: '#3B8070' },
   build: {
     extend(config, { isDev, isClient }) {
+      /* eslint-disable */
+      config.externals = ["node_modules/bootstrap-vue"];
       if (isDev && isClient) {
-        // eslint-disable-next-line no-param-reassign
         config.node = {
           fs: 'empty',
         };
@@ -32,6 +35,9 @@ module.exports = {
       }
     },
   },
+  buildModules: [
+    '@nuxtjs/dotenv',
+  ],
   styleResources: {
     scss: [
       '~assets/scss/vars.scss',
@@ -42,7 +48,12 @@ module.exports = {
     '~assets/scss/global.scss',
     '~assets/scss/vars.scss',
   ],
-  modules: ['@nuxtjs/style-resources', 'nuxt-i18n'],
+  modules: ['@nuxtjs/style-resources', 'nuxt-i18n', 'bootstrap-vue/nuxt'],
+  bootstrapVue: {
+    bootstrapCSS: false, // Or `css: false`
+    bootstrapVueCSS: false, // Or `bvCSS: false`
+    components: ['BTable', 'BPagination'],
+  },
   i18n: {
     locales: ['ru', 'en'],
     defaultLocale: 'ru',
@@ -65,5 +76,14 @@ module.exports = {
     { src: '~/plugins/helpers.js', mode: 'client', ssr: false },
     { src: '~/plugins/vuescroll.js', mode: 'client', ssr: false },
     { src: '~/plugins/sdk.js', mode: 'client', ssr: false },
+    { src: '~/plugins/vee-validate', mode: 'client', ssr: false },
+    { src: '~/plugins/math.js', mode: 'client', ssr: false },
+    { src: '~/plugins/confirm', mode: 'client', ssr: false },
+    { src: '~/plugins/global.js', mode: 'client', ssr: false },
   ],
+  env: {
+    baseURL: process.env.BASE_URL,
+    baseCoin: process.env.BASE_COIN,
+    network: process.env.NETWORK,
+  },
 };
