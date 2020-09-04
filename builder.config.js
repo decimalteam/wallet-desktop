@@ -1,9 +1,5 @@
 const ICONS_DIR = 'build/icons/';
 
-const files = [
-  './build/**/*', './dist/main/index.js',
-];
-
 const windowsOS = {
   win: {
     icon: `${ICONS_DIR}win-icon.ico`,
@@ -56,6 +52,8 @@ module.exports = {
   },
   // default files: https://www.electron.build/configuration/contents
   files: [
+    './build/**/*',
+    './dist/main/index.js',
     'package.json',
     {
       from: 'dist/main/',
@@ -70,7 +68,6 @@ module.exports = {
       to: 'dist/resources/',
     },
   ],
-  ...files,
   ...windowsOS,
   ...linuxOS,
   ...macOS,
