@@ -42,7 +42,7 @@ const macOS = {
 }
 
 module.exports = {
-  asar: false,
+  asar: true,
   productName: 'DecimalWallet',
   appId: 'com.decimal.wallet.desktop',
   artifactName: 'decimal-wallet-${version}.${ext}',
