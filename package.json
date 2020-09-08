@@ -28,7 +28,7 @@
     "mac": {
       "target": "dmg",
       "icon": "build/icons/icon.icns",
-      "publish": ["github"],
+      "publish": ["github"]
     },
     "linux": {
       "target": "deb",
