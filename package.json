@@ -5,7 +5,6 @@
   "main": "./dist/main/index.js",
   "build": {
     "productName": "DecimalWallet",
-    "artifactName": "decimal-wallet-1.0.2",
     "appId": "com.decimal.wallet.desktop",
     "files": [
       "./build/**/*",
@@ -29,7 +28,8 @@
     "mac": {
       "target": "dmg",
       "icon": "build/icons/icon.icns",
-      "publish": ["github"]
+      "publish": ["github"],
+      "artifactName": "decimal-wallet-1.0.2.app"
     },
     "linux": {
       "target": "deb",
