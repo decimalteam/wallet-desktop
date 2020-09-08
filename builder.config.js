@@ -15,14 +15,16 @@ const windowsOS = {
 const linuxOS = {
   linux: {
     icon: ICONS_DIR,
-    target: 'deb'
+    target: 'deb',
+    category: 'Utility'
   }
 }
 
 const macOS = {
   mac: {
     target: 'dmg',
-    icon: ICONS_DIR + 'icon.icns'
+    icon: ICONS_DIR + 'icon.icns',
+    publish: ['github']
   },
   dmg: {
     contents: [
