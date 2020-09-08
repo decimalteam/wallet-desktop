@@ -29,7 +29,7 @@
       "target": "dmg",
       "icon": "build/icons/icon.icns",
       "publish": ["github"],
-      "artifactName": "decimal-wallet-1.0.2.app"
+      "artifactName": "DecimalWallet.app"
     },
     "linux": {
       "target": "deb",
