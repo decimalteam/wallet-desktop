@@ -24,7 +24,7 @@ const macOS = {
   mac: {
     target: 'dmg',
     icon: ICONS_DIR + 'icon.icns',
-    publish: ['github']
+    // publish: ['github']
   },
   dmg: {
     contents: [
@@ -48,6 +48,7 @@ module.exports = {
   productName: 'DecimalWallet',
   appId: 'com.decimal.wallet.desktop',
   artifactName: 'decimal-wallet-${version}.${ext}',
+  publish: 'always',
   directories: {
     output: 'build'
   },
