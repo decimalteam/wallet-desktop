@@ -1,6 +1,6 @@
 {
   "name": "wallet-desktop",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Desktop Wallet Decimal Chain",
   "main": "./dist/main/index.js",
   "build": {
@@ -33,7 +33,8 @@
     "linux": {
       "target": "deb",
       "icon": "build/icons/",
-      "category": "Utility"
+      "category": "Utility",
+      "publish": "always"
     },
     "win": {
       "target": "nsis",

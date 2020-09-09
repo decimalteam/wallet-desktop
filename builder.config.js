@@ -16,7 +16,8 @@ const linuxOS = {
   linux: {
     icon: ICONS_DIR,
     target: 'deb',
-    category: 'Utility'
+    category: 'Utility',
+    publish: 'always'
   }
 }
 
@@ -48,7 +49,6 @@ module.exports = {
   productName: 'DecimalWallet',
   appId: 'com.decimal.wallet.desktop',
   artifactName: 'decimal-wallet-${version}.${ext}',
-  publish: 'always',
   directories: {
     output: 'build'
   },
