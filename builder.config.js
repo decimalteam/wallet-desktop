@@ -52,7 +52,7 @@ module.exports = {
       provider: "github",
       owner: "decimalteam",
       releaseType: 'release',
-      vPrefixedTagName = true
+      vPrefixedTagName: true
     }
   ],
   directories: {
