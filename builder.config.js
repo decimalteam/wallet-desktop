@@ -1,4 +1,5 @@
 const ICONS_DIR = 'build/icons/'
+const packageJSON = require('./package.json')
 
 const windowsOS = {
   win: {
@@ -49,10 +50,10 @@ module.exports = {
   artifactName: 'decimal-wallet-${version}.${ext}',
   publish: [
     {
-      provider: "github",
-      owner: "decimalteam",
-      releaseType: 'release',
-      vPrefixedTagName: true
+      provider: 'github',
+      owner: 'decimalteam',
+      repo: 'wallet-desctop',
+      tag_name: `v${packageJSON.version}`,
     }
   ],
   directories: {
