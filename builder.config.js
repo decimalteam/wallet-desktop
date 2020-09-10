@@ -1,5 +1,5 @@
 const ICONS_DIR = 'build/icons/'
-const packageJSON = require('./package.json')
+// const packageJSON = require('./package.json')
 
 const windowsOS = {
   win: {
@@ -47,18 +47,19 @@ module.exports = {
   asar: true,
   productName: 'DecimalWallet',
   appId: 'com.decimal.wallet.desktop',
-  artifactName: 'decimal-wallet-${version}.${ext}',
-  publish: [
-    {
-      provider: 'github',
-      owner: 'decimalteam',
-      repo: 'wallet-desktop',
-      private: true,
-      tag_name: `v${packageJSON.version}`,
-    }
-  ],
+  // artifactName: 'decimal-wallet-${version}.${ext}',
+  // publish: [
+  //   {
+  //     provider: 'github',
+  //     owner: 'decimalteam',
+  //     repo: 'wallet-desktop',
+  //     private: true,
+  //     tag_name: `v${packageJSON.version}`,
+  //   }
+  // ],
   directories: {
-    output: 'build'
+    output: 'build',
+    buildResources: 'assets',
   },
   // default files: https://www.electron.build/configuration/contents
   files: [
