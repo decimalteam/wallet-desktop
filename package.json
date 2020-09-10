@@ -1,6 +1,6 @@
 {
   "name": "wallet-desktop",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Desktop Wallet Decimal Chain",
   "main": "./dist/main/index.js",
   "build": {
@@ -37,22 +37,10 @@
         }
       ]
     },
-    "mac": {
-      "target": "dmg",
-      "icon": "build/icons/icon.icns"
-    },
     "linux": {
       "target": "deb",
       "icon": "build/icons/",
       "category": "Utility"
-    },
-    "win": {
-      "target": "nsis",
-      "publisherName": "decimalteam",
-      "icon": "build/icons/icon.ico"
-    },
-    "nsis": {
-      "differentialPackage": true
     },
     "directories": {
       "buildResources": "assets",
