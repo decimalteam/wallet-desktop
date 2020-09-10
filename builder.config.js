@@ -58,7 +58,7 @@ module.exports = {
   // ],
   directories: {
     output: 'build',
-    buildResources: 'assets',
+    buildResources: 'assets', // это вроде не нужно
   },
   // default files: https://www.electron.build/configuration/contents
   files: [
