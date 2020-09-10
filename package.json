@@ -1,6 +1,6 @@
 {
   "name": "wallet-desktop",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "Desktop Wallet Decimal Chain",
   "main": "./dist/main/index.js",
   "build": {
