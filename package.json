@@ -1,14 +1,24 @@
 {
   "name": "wallet-desktop",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Desktop Wallet Decimal Chain",
   "main": "./dist/main/index.js",
   "build": {
     "productName": "DecimalWallet",
     "appId": "com.decimal.wallet.desktop",
     "files": [
-      "./build/**/*",
-      "./dist/main/index.js"
+      {
+        "from": "./dist/main/",
+        "to": "./dist/main/"
+      },
+      {
+        "from": "./dist/renderer",
+        "to": "./dist/renderer/"
+      },
+      {
+        "from": "./src/resources/",
+        "to": "./dist/resources/"
+      }
     ],
     "dmg": {
       "contents": [
