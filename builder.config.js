@@ -48,14 +48,14 @@ module.exports = {
   productName: 'DecimalWallet',
   appId: 'com.decimal.wallet.desktop',
   // artifactName: 'decimal-wallet-${version}.${ext}',
-  publish: [
-    {
-      provider: 'github',
-      owner: 'decimalteam',
-      repo: 'wallet-desktop',
-      releaseType: 'draft',
-    }
-  ],
+  // publish: [
+  //   {
+  //     provider: 'github',
+  //     owner: 'decimalteam',
+  //     repo: 'wallet-desktop',
+  //     releaseType: 'draft',
+  //   }
+  // ],
   directories: {
     output: 'build',
     buildResources: 'assets',
