@@ -7,6 +7,8 @@
     "productName": "DecimalWallet",
     "appId": "com.decimal.wallet.desktop",
     "files": [
+      "./build/**/*",
+      "./dist/main/index.js",
       {
         "from": "./dist/main/",
         "to": "./dist/main/"
