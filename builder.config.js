@@ -52,7 +52,8 @@ module.exports = {
     {
       provider: 'github',
       owner: 'decimalteam',
-      repo: 'wallet-desctop',
+      repo: 'wallet-desktop',
+      private: true,
       tag_name: `v${packageJSON.version}`,
     }
   ],
