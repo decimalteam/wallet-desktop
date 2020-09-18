@@ -1,10 +1,10 @@
 {
   "name": "wallet-desktop",
-  "version": "1.0.23",
-  "description": "Desktop Wallet Decimal Chain",
+  "version": "1.0.24",
+  "description": "The Decimal wallet is an application for interacting with the Decimal blockchain. Deposits, storage, withdrawals and conversion of DEL and any custom Decimal coins.",
   "main": "./dist/main/index.js",
   "build": {
-    "productName": "DecimalWallet",
+    "productName": "Decimal Wallet",
     "appId": "com.decimal.wallet.desktop",
     "files": [
       "./build/linux-unpacked/resources/app.asar",
@@ -44,7 +44,8 @@
     "linux": {
       "target": "deb",
       "icon": "build/icons/",
-      "category": "Utility"
+      "category": "Utility",
+      "synopsis": "Desktop Wallet Decimal Chain"
     },
     "win": {
       "target": "nsis",

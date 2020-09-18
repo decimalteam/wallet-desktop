@@ -143,7 +143,6 @@ export default {
 
   .vue-simple-suggest.suggest input {
     text-transform: uppercase;
-    @include monospace;
 
     &::placeholder {
       text-transform: capitalize;
@@ -168,7 +167,6 @@ export default {
     opacity: 1;
     z-index: 1000;
     color: rgba(249, 248, 251, 0.5);
-    @include monospace;
   }
 
   .vue-simple-suggest.suggest .suggestions .suggest-item {

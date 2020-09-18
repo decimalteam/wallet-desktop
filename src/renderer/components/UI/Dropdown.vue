@@ -16,7 +16,7 @@
       @click="toggleDd"
     >
       <div
-        class="dd__title dd__title--2 text-mono"
+        class="dd__title dd__title--2"
       >
         {{ value }}
       </div>
@@ -43,7 +43,7 @@
           <div
             v-for="(item, i) in options"
             :key="`dd__option__${item.coin}`"
-            class="dd__option text-mono"
+            class="dd__option"
             :class="{'dd__option--first': i === 0}"
             @click="setValue(item.coin)"
           >
@@ -69,7 +69,7 @@
           <div
             v-for="(item, i) in options"
             :key="`dd__option__${item}`"
-            class="dd__option text-mono"
+            class="dd__option"
             :class="{'dd__option--first': i === 0}"
             @click="setValue(item)"
           >

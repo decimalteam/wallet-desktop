@@ -1,5 +1,4 @@
 const ICONS_DIR = 'build/icons/'
-// const packageJSON = require('./package.json')
 
 const windowsOS = {
   win: {
@@ -17,7 +16,8 @@ const linuxOS = {
   linux: {
     icon: ICONS_DIR,
     target: 'deb',
-    category: 'Utility'
+    category: 'Utility',
+    synopsis: 'Desktop Wallet Decimal Chain'
   }
 }
 
@@ -45,17 +45,8 @@ const macOS = {
 
 module.exports = {
   asar: true,
-  productName: 'DecimalWallet',
+  productName: 'Decimal Wallet',
   appId: 'com.decimal.wallet.desktop',
-  // artifactName: 'decimal-wallet-${version}.${ext}',
-  // publish: [
-  //   {
-  //     provider: 'github',
-  //     owner: 'decimalteam',
-  //     repo: 'wallet-desktop',
-  //     releaseType: 'draft',
-  //   }
-  // ],
   directories: {
     output: 'build',
     buildResources: 'assets', // это вроде не нужно
