@@ -1,11 +1,11 @@
 {
   "name": "wallet-desktop",
-  "version": "1.0.23",
+  "version": "1.0.25",
   "description": "Desktop Wallet Decimal Chain",
   "main": "./dist/main/index.js",
   "build": {
     "productName": "DecimalWallet",
-    "appId": "com.decimal.wallet.desktop",
+    "appId": "com.decimal.chain",
     "files": [
       "./build/linux-unpacked/resources/app.asar",
       "./dist/main/index.js",
@@ -61,7 +61,7 @@
   },
   "scripts": {
     "dev": "node .electron-nuxt/dev.js",
-    "build": "node .electron-nuxt/build.js",
+    "build": "cross-env CSC_LINK=\"./build/all-certs.p12\" CSC_KEY_PASSWORD=\"2DFnVz3Fs7bf01G\" node .electron-nuxt/build.js",
     "test": "",
     "preinstall": "node .electron-nuxt/check-engines.js",
     "postinstall": "electron-builder install-app-deps"
