@@ -52,7 +52,7 @@
       "differentialPackage": true
     },
     "directories": {
-      "buildResources": "assets",
+      "buildResources": "build/icons/",
       "output": "build"
     }
   },

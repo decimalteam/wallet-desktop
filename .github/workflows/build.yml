@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@v2  
   
       - name: Build/release Electron app
+        run:  sudo mdutil -a -i off
         uses: michalzaq12/action-electron-nuxt@v1
         with:
           # GitHub token, automatically provided to the action
