@@ -2,4 +2,6 @@
 dist
 build/*
 !build/icons
+!build/entitlements.mas.inherit.plist
+!build/entitlements.mas.plist
 node_modules

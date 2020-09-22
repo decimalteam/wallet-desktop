@@ -23,8 +23,20 @@ const linuxOS = {
 
 const macOS = {
   mac: {
-    target: 'dmg',
-    icon: ICONS_DIR + 'icon.icns',
+    type: 'distribution',
+    target: ['mas', 'pkg', 'dmg'],
+    artifactName: '${productName}-${version}-${os}.${ext}',
+    category: 'public.app-category.utilities',
+    provisioningProfile: 'mac_app_store-2.provisionprofile',
+    icon: ICONS_DIR + 'icon.icns'
+  },
+  mas: {
+    hardenedRuntime: false,
+    type: 'distribution',
+    category: 'public.app-category.utilities',
+    entitlements: 'build/entitlements.mas.plist',
+    entitlementsInherit: 'build/entitlements.mas.inherit.plist',
+    icon: ICONS_DIR + 'icon.icns'
   },
   dmg: {
     contents: [
@@ -45,11 +57,11 @@ const macOS = {
 
 module.exports = {
   asar: true,
-  productName: 'Decimal Wallet',
-  appId: 'com.decimal.wallet.desktop',
+  productName: 'DecimalWallet',
+  appId: 'com.decimal.chain',
   directories: {
     output: 'build',
-    buildResources: 'assets', // это вроде не нужно
+    buildResources: ICONS_DIR,
   },
   // default files: https://www.electron.build/configuration/contents
   files: [
