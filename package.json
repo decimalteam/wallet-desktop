@@ -7,6 +7,7 @@
     "productName": "DecimalWallet",
     "appId": "com.decimal.chain",
     "asar": true,
+    "afterSign": "./apple-notarize.js",
     "files": [
       "./build/linux-unpacked/resources/app.asar",
       "./dist/main/index.js",
@@ -23,36 +24,16 @@
         "to": "./dist/resources/"
       }
     ],
-    "dmg": {
-      "contents": [
-        {
-          "x": 130,
-          "y": 150,
-          "type": "file"
-        },
-        {
-          "x": 410,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
     "mac": {
-      "type": "distribution",
-      "target": ["mas", "pkg", "dmg"],
+      "hardenedRuntime": true,
+      "target": "default",
       "artifactName": "${productName}-${version}-${os}.${ext}",
       "category": "public.app-category.utilities",
-      "provisioningProfile": "mac_app_store-2.provisionprofile",
-      "icon": "build/icons/icon.icns"
-    },
-    "mas": {
-      "hardenedRuntime": false,
-      "type": "distribution",
-      "category": "public.app-category.utilities",
+      "provisioningProfile": "mac_app_store.provisionprofile",
+      "icon": "build/icons/icon.icns",
       "entitlements": "build/entitlements.mas.plist",
       "entitlementsInherit": "build/entitlements.mas.inherit.plist",
-      "icon": "build/icons/icon.icns"
+      "gatekeeperAssess": false
     },
     "linux": {
       "target": "deb",
@@ -95,6 +76,7 @@
     "bootstrap-vue": "^2.16.0",
     "decimal-js-sdk": "^0.1.31",
     "decimal.js": "^10.2.0",
+    "electron-notarize": "^1.0.0",
     "nuxt": "^2.14.1",
     "nuxt-i18n": "^6.13.6",
     "source-map-support": "^0.5.19",

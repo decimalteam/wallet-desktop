@@ -1,5 +1,7 @@
 .nuxt
 dist
+.env
+src/renderer/.env
 build/*
 !build/icons
 !build/entitlements.mas.inherit.plist

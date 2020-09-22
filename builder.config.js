@@ -23,42 +23,57 @@ const linuxOS = {
 
 const macOS = {
   mac: {
-    type: 'distribution',
-    target: ['mas', 'pkg', 'dmg'],
+    hardenedRuntime: true,
+    target: 'default',
     artifactName: '${productName}-${version}-${os}.${ext}',
     category: 'public.app-category.utilities',
-    provisioningProfile: 'mac_app_store-2.provisionprofile',
-    icon: ICONS_DIR + 'icon.icns'
-  },
-  mas: {
-    hardenedRuntime: false,
-    type: 'distribution',
-    category: 'public.app-category.utilities',
+    provisioningProfile: 'mac_app_store.provisionprofile',
+    icon: 'build/icons/icon.icns',
     entitlements: 'build/entitlements.mas.plist',
     entitlementsInherit: 'build/entitlements.mas.inherit.plist',
-    icon: ICONS_DIR + 'icon.icns'
+    gatekeeperAssess: false
   },
-  dmg: {
-    contents: [
-      {
-        x: 410,
-        y: 150,
-        type: 'link',
-        path: '/Applications'
-      },
-      {
-        x: 130,
-        y: 150,
-        type: 'file'
-      }
-    ]
-  }
+  // mac: {
+  //   type: 'distribution',
+  //   target: ['mas', 'pkg', 'dmg'],
+  //   artifactName: '${productName}-${version}-${os}.${ext}',
+  //   category: 'public.app-category.utilities',
+  //   provisioningProfile: 'mac_app_store.provisionprofile',
+  //   icon: ICONS_DIR + 'icon.icns'
+  // },
+  // mas: {
+  //   hardenedRuntime: false,
+  //   type: 'distribution',
+  //   category: 'public.app-category.utilities',
+  //   entitlements: 'build/entitlements.mas.plist',
+  //   entitlementsInherit: 'build/entitlements.mas.inherit.plist',
+  //   icon: ICONS_DIR + 'icon.icns'
+  // },
+  // dmg: {
+  //   contents: [
+  //     {
+  //       x: 410,
+  //       y: 150,
+  //       type: 'link',
+  //       path: '/Applications'
+  //     },
+  //     {
+  //       x: 130,
+  //       y: 150,
+  //       type: 'file'
+  //     }
+  //   ]
+  // },
+  // pkg: {
+  //   scripts: 'build/pkg-scripts'
+  // }
 }
 
 module.exports = {
   asar: true,
   productName: 'DecimalWallet',
   appId: 'com.decimal.chain',
+  afterSign: 'apple-notarize.js',
   directories: {
     output: 'build',
     buildResources: ICONS_DIR,
