@@ -1,5 +1,4 @@
 const ICONS_DIR = 'build/icons/'
-// const packageJSON = require('./package.json')
 
 const windowsOS = {
   win: {
@@ -27,7 +26,7 @@ const macOS = {
     target: ['mas', 'pkg', 'dmg'],
     artifactName: '${productName}-${version}-${os}.${ext}',
     category: 'public.app-category.utilities',
-    provisioningProfile: 'mac_app_store.provisionprofile',
+    provisioningProfile: 'mac_app_store-2.provisionprofile',
     icon: ICONS_DIR + 'icon.icns'
   },
   mas: {
@@ -59,15 +58,6 @@ module.exports = {
   asar: true,
   productName: 'DecimalWallet',
   appId: 'com.decimal.chain',
-  // artifactName: 'decimal-wallet-${version}.${ext}',
-  // publish: [
-  //   {
-  //     provider: 'github',
-  //     owner: 'decimalteam',
-  //     repo: 'wallet-desktop',
-  //     releaseType: 'draft',
-  //   }
-  // ],
   directories: {
     output: 'build',
     buildResources: ICONS_DIR,

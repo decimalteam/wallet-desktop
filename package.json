@@ -1,6 +1,6 @@
 {
   "name": "wallet-desktop",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "description": "Desktop Wallet Decimal Chain",
   "main": "./dist/main/index.js",
   "build": {
@@ -22,23 +22,20 @@
         "to": "./dist/resources/"
       }
     ],
-    "dmg": {
-      "contents": [
-        {
-          "x": 130,
-          "y": 150,
-          "type": "file"
-        },
-        {
-          "x": 410,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
     "mac": {
-      "target": "dmg",
+      "type": "distribution",
+      "target": ["mas", "pkg", "dmg"],
+      "artifactName": "${productName}-${version}-${os}.${ext}",
+      "category": "public.app-category.utilities",
+      "provisioningProfile": "mac_app_store-2.provisionprofile",
+      "icon": "build/icons/icon.icns"
+    },
+    "mas": {
+      "hardenedRuntime": false,
+      "type": "distribution",
+      "category": "public.app-category.utilities",
+      "entitlements": "build/entitlements.mas.plist",
+      "entitlementsInherit": "build/entitlements.mas.inherit.plist",
       "icon": "build/icons/icon.icns"
     },
     "linux": {
