@@ -36,22 +36,22 @@ const macOS = {
     entitlements: 'build/entitlements.mas.plist',
     entitlementsInherit: 'build/entitlements.mas.inherit.plist',
     icon: ICONS_DIR + 'icon.icns'
+  },
+  dmg: {
+    contents: [
+      {
+        x: 410,
+        y: 150,
+        type: 'link',
+        path: '/Applications'
+      },
+      {
+        x: 130,
+        y: 150,
+        type: 'file'
+      }
+    ]
   }
-  // dmg: {
-  //   contents: [
-  //     {
-  //       x: 410,
-  //       y: 150,
-  //       type: 'link',
-  //       path: '/Applications'
-  //     },
-  //     {
-  //       x: 130,
-  //       y: 150,
-  //       type: 'file'
-  //     }
-  //   ]
-  // }
 }
 
 module.exports = {

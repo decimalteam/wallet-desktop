@@ -6,6 +6,7 @@
   "build": {
     "productName": "DecimalWallet",
     "appId": "com.decimal.chain",
+    "asar": true,
     "files": [
       "./build/linux-unpacked/resources/app.asar",
       "./dist/main/index.js",
@@ -22,6 +23,21 @@
         "to": "./dist/resources/"
       }
     ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        },
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
     "mac": {
       "type": "distribution",
       "target": ["mas", "pkg", "dmg"],
