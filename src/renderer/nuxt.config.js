@@ -82,8 +82,8 @@ module.exports = {
     { src: '~/plugins/global.js', mode: 'client', ssr: false },
   ],
   env: {
-    baseURL: process.env.BASE_URL,
-    baseCoin: process.env.BASE_COIN,
-    network: process.env.NETWORK,
+    BASE_URL: process.env.BASE_URL,
+    BASE_COIN: process.env.BASE_COIN,
+    NETWORK: process.env.NETWORK,
   },
 };

@@ -58,6 +58,7 @@
           <h2 class="mb-15">
             {{ $t('wallet.transaction') }}
           </h2>
+          <!-- {{ txsData }} -->
           <txs-table
             :txs="txsData"
             :fields="fields"

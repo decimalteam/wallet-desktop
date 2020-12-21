@@ -4,9 +4,9 @@ if (process.browser) {
   window.onNuxtReady(async ({ $store }) => {
     store = $store;
 
-    const baseURL = process.env.baseURL;
-    const baseCoin = process.env.baseCoin;
-    const network = process.env.network;
+    const baseURL = process.env.BASE_URL;
+    const baseCoin = process.env.BASE_COIN;
+    const network = process.env.NETWORK;
 
 
     store.commit('decimal/setBaseURL', baseURL);

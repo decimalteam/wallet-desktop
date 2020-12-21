@@ -45,13 +45,13 @@
                             v-if="estimatedGet.key === 'reserve-limit'"
                             class="input__tip input__tip--error"
                           >
-                            {{ $tc('errors.reserve-limit-short', estimatedGet.coin) }}
+                            {{ $tc('errors.reserve-limit-short', n = estimatedGet.coin) }}
                           </div>
                           <div
                             v-if="estimatedGet.key === 'more-limit-volume'"
                             class="input__tip input__tip--error"
                           >
-                            {{ $tc('errors.more-limit-short', estimatedGet.coin) }}
+                            {{ $tc('errors.more-limit-short', n = estimatedGet.coin) }}
                           </div>
                         </div>
                         <div
@@ -110,13 +110,13 @@
                           v-if="estimatedSpend.key === 'reserve-limit'"
                           class="input__tip input__tip--error"
                         >
-                          {{ $tc('errors.reserve-limit-short', estimatedSpend.coin) }}
+                          {{ $tc('errors.reserve-limit-short', n = estimatedSpend.coin) }}
                         </div>
                         <div
                           v-if="estimatedSpend.key === 'more-limit-volume'"
                           class="input__tip input__tip--error"
                         >
-                          {{ $tc('errors.more-limit-short', estimatedSpend.coin) }}
+                          {{ $tc('errors.more-limit-short', n = estimatedSpend.coin) }}
                         </div>
                       </div>
                       <div
@@ -255,6 +255,8 @@ export default {
 
       giveAmount: '',
       getAmount: '',
+
+      txFee: {},
     };
   },
   computed: {
@@ -295,7 +297,7 @@ export default {
           },
           {
             label: this.$t('notify.fee'),
-            value: `${this.txFee.amount} ${this.txFee.coin}`,
+            value: `${this.formatAmount(this.txFee.amount)} ${this.txFee.coin}`,
           },
         ],
       };

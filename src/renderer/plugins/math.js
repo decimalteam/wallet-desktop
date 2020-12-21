@@ -81,7 +81,9 @@ export const buyCoinByCoin = (coin, coinAmount) => {
 };
 
 function isLessReserve(spendCoin, amount) {
-  const maxDelSpend = new DecimalNumber(spendCoin.reserve).minus(10000).toFixed();
+  // console.log('spend-coin', spendCoin);
+  // console.log('amount', amount);
+  const maxDelSpend = new DecimalNumber(spendCoin.reserve).minus(1000).toFixed();
 
   if (new DecimalNumber(amount).gt(maxDelSpend)) {
     return {
@@ -106,14 +108,14 @@ function isMoreMaxSupply(getCoin, amount) {
 export function buy(getCoin, amount, spendCoin) {
   spendCoin = getCoinFormatted(spendCoin);
   getCoin = getCoinFormatted(getCoin);
-
+  // console.log('buy');
   let estimated = '';
   let error = false;
 
-  if (getCoin.ticker.toLowerCase() === process.env.baseCoin.toLowerCase()) {
+  if (getCoin.ticker.toLowerCase() === process.env.BASE_COIN.toLowerCase()) {
     estimated = sellCoinByDel(spendCoin, amount); // => coin
     error = isLessReserve(spendCoin, amount);
-  } else if (spendCoin.ticker.toLowerCase() === process.env.baseCoin.toLowerCase()) {
+  } else if (spendCoin.ticker.toLowerCase() === process.env.BASE_COIN.toLowerCase()) {
     estimated = buyCoinByCoin(getCoin, amount); // => tdel
     error = isMoreMaxSupply(getCoin, amount);
   } else {
@@ -141,16 +143,16 @@ export function buy(getCoin, amount, spendCoin) {
 export function sell(spendCoin, amount, getCoin) {
   spendCoin = getCoinFormatted(spendCoin);
   getCoin = getCoinFormatted(getCoin);
-
+  // console.log('sell');
   let estimated = '';
   let error = false;
 
-  if (spendCoin.ticker.toLowerCase() === process.env.baseCoin.toLowerCase()) {
+  if (spendCoin.ticker.toLowerCase() === process.env.BASE_COIN.toLowerCase()) {
     estimated = buyCoin(getCoin, amount); // => coin
     error = isMoreMaxSupply(getCoin, estimated);
-  } else if (getCoin.ticker.toLowerCase() === process.env.baseCoin.toLowerCase()) {
+  } else if (getCoin.ticker.toLowerCase() === process.env.BASE_COIN.toLowerCase()) {
     estimated = sellCoin(spendCoin, amount);
-    error = isLessReserve(spendCoin, amount);
+    error = isLessReserve(spendCoin, estimated);
   } else {
     const needDel = sellCoin(spendCoin, amount); // => tdel
     estimated = buyCoin(getCoin, needDel); // => coin

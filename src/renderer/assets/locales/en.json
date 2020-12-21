@@ -93,6 +93,13 @@
         "create_transaction": "Create Multisig transaction",
         "sign_transaction": "Sign Multisig transaction",
         "redeem_check": "Redeem check",
+        "refund": "Refund swap",
+        "redeem": "Redeem swap",
+        "htlt": "Create swap",
+        "submit_proposal": "Submit proposal",
+        "vote": "Vote",
+        "in": "Receive",
+        "out": "Send",
         "details": {
             "participantsTable": "Multisig owners",
             "multisendTable": "Receivers",

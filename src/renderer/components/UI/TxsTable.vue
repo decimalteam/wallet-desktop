@@ -447,6 +447,7 @@ export default {
   computed: {
     txsFormatted() {
       const txs = [];
+      // eslint-disable-next-line
       this.txs.forEach((tx, i) => {
         txs.push({
           hash: this.shortText(tx.hash, 7),
@@ -486,7 +487,7 @@ export default {
           return `- ${this.formatAmount(amount, 4)} ${coin}`;
         }
         case 'buy_coin': {
-          const amount = this.getAmountFromSatoshi(tx.data.amount_base);
+          const amount = tx.data.amount_base ? this.getAmountFromSatoshi(tx.data.amount_base) : 0;
           const coin = tx.data.coin_base === this.BASE_COIN.toLowerCase() ? this.BASE_COIN : tx.data.coin_to_sell.toUpperCase();
           return `- ${this.formatAmount(amount, 4)} ${coin}`;
         }
@@ -498,7 +499,7 @@ export default {
       switch (tx.type) {
         case 'sell_coin':
         case 'sell_all_coin': {
-          const amount = this.getAmountFromSatoshi(tx.data.amount_base);
+          const amount = tx.data.amount_base ? this.getAmountFromSatoshi(tx.data.amount_base) : 0;
           const coin = tx.data.coin_base === this.BASE_COIN.toLowerCase() ? this.BASE_COIN : tx.data.coin_base.toUpperCase();
           return `+ ${this.formatAmount(amount, 4)} ${coin}`;
         }

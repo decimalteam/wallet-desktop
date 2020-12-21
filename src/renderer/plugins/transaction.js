@@ -57,7 +57,7 @@ export class Transaction {
       case 'create_coin':
         this.coin = Transaction.fmtCoin(tx.data.symbol);
         this.symbol = Transaction.fmtCoin(tx.data.symbol);
-        this.title = tx.data.title;
+        this.coin_title = tx.data.title;
         this.crr = tx.data.constant_reserve_ratio;
         this.initial_volume = tx.data.initial_volume;
         this.initial_reserve = tx.data.initial_reserve;
@@ -125,8 +125,8 @@ export class Transaction {
         this.coin = Transaction.fmtCoin(tx.data.coin);
         this.validator_address = tx.data.validator_address;
         this.completion_time = tx.data.completion_time;
-        this.info_substr = `${this.amount} ${this.coin}`;
-        // this.amount = this.info_substr;
+        this.info_substr = this.amount;
+        this.amount = this.info_substr;
         this.info_amount = this.amount;
         this.info_coin = this.coin;
         break;
@@ -148,6 +148,36 @@ export class Transaction {
           this.info_amount = this.amount_check;
           this.info_coin = this.coin_check;
         }
+        break;
+      case 'htlt':
+        if (this.type === 'Success') {
+          this.info_amount = JSON.parse(tx.data.atomic_swap.amount)[0].amount;
+          this.info_coin = Transaction.fmtCoin(JSON.parse(tx.data.atomic_swap.amount)[0].coin);
+        }
+        this.from = tx.data.atomic_swap.from;
+        this.time_locked = tx.data.atomic_swap.time_locked;
+        this.transfer_type = tx.data.atomic_swap.transfer_type;
+        break;
+      case 'redeem':
+        this.from = tx.data.atomic_swap.from;
+        this.hashed_secret = tx.data.atomic_swap.hashed_secret;
+        this.secret = tx.data.atomic_swap.secret;
+        break;
+      case 'refund':
+        this.from = tx.data.atomic_swap.from;
+        this.hashed_secret = tx.data.atomic_swap.hashed_secret;
+        break;
+      case 'vote':
+        this.proposal = tx.data.submit_proposal.proposal_id;
+        this.vote = tx.data.submit_proposal.vote;
+        break;
+      case 'submit_proposal':
+        this.proposal = tx.data.submit_proposal.proposal_id;
+        this.proposal_title = tx.data.submit_proposal.title;
+        this.description = tx.data.submit_proposal.description;
+        this.validator_address = tx.data.submit_proposal.proposer;
+        this.voting_start = tx.data.submit_proposal.voting_start_block;
+        this.voting_end = tx.data.submit_proposal.voting_end_block;
         break;
       default:
         break;
