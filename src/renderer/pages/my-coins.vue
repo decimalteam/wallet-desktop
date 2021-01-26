@@ -7,6 +7,7 @@
     />
     <LeftMenu :title="`${activeCoinPageTitle}`" />
     <div class="container__main">
+      <Loader ref="loader" />
       <div class="content">
         <template v-if="coins[coinPage]">
           <h2 class="title mb-40">
@@ -126,10 +127,11 @@ import LeftMenu from '~/components/LeftMenu';
 import pagination from '~/components/UI/pagination';
 import SendCoins from '~/components/SendCoins';
 import TxsTable from '~/components/UI/TxsTable';
+import Loader from '~/components/loader';
 
 export default {
   components: {
-    CustomInput, LeftMenu, pagination, SendCoins, TxsTable,
+    CustomInput, LeftMenu, pagination, SendCoins, TxsTable, Loader,
   },
   middleware: 'auth',
   data() {
@@ -158,12 +160,16 @@ export default {
     },
   },
   watch: {
-    currentPage() {
-      this.getTxs();
+    async currentPage() {
+      this.$refs.loader.show();
+      await this.getTxs();
+      this.$refs.loader.hide();
     },
-    coinPage() {
+    async coinPage() {
       this.currentPage = 1;
-      this.getTxs();
+      this.$refs.loader.show();
+      await this.getTxs();
+      this.$refs.loader.hide();
     },
     sdk(oldVal, newVal) {
       if (oldVal !== newVal) {
@@ -178,9 +184,11 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
     if (this.sdk) {
-      this.getTxs();
+      this.$refs.loader.show();
+      await this.getTxs();
+      this.$refs.loader.hide();
     }
   },
   methods: {

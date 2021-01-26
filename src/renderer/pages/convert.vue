@@ -2,6 +2,7 @@
   <section class="content-wrap">
     <LeftMenu :title="$t('convert.title')" />
     <div class="container__main">
+      <Loader ref="loader" />
       <div class="content">
         <h2 class="title mb-40">
           {{ $t('convert.title') }}
@@ -213,10 +214,11 @@ import CoinsList from '~/components/UI/CoinsList';
 import { buy, sell } from '~/plugins/math';
 import pagination from '~/components/UI/pagination';
 import TxsTable from '~/components/UI/TxsTable';
+import Loader from '~/components/loader';
 
 export default {
   components: {
-    CustomInput, CustomDropdown, LeftMenu, CoinsList, pagination, TxsTable,
+    CustomInput, CustomDropdown, LeftMenu, CoinsList, pagination, TxsTable, Loader,
   },
   middleware: 'auth',
   data() {
@@ -308,8 +310,10 @@ export default {
     },
   },
   watch: {
-    currentPage() {
-      this.getTxs();
+    async currentPage() {
+      this.$refs.loader.show();
+      await this.getTxs();
+      this.$refs.loader.hide();
     },
     sdk(oldVal, newVal) {
       if (oldVal !== newVal) {
@@ -341,9 +345,11 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
     if (this.sdk) {
-      this.getTxs();
+      this.$refs.loader.show();
+      await this.getTxs();
+      this.$refs.loader.hide();
     }
   },
   methods: {
@@ -417,6 +423,7 @@ export default {
     },
 
     async send() {
+      this.$refs.loader.show();
       if (!this.giveCoinFullInfo) {
         this.errorModal(this.$t('errors.unknow-coin'));
         this.err.unknowBuyCoin = true;
@@ -447,23 +454,27 @@ export default {
       switch (this.mode) {
         case 'sell':
           this.txFee = await this.getTxFee(this.TX_TYPE.COIN_SELL, data, options);
+          this.$refs.loader.hide();
           if (!this.isEnoughMoney(this.giveCoin, this.giveAmount, this.txFee)) return;
 
           result = await this.sendTransaction(data, options, this.sdk.sellCoins, this.confirmParams);
           break;
         case 'sell-all':
           this.txFee = await this.getTxFee(this.TX_TYPE.COIN_SELL_ALL, data, options);
+          this.$refs.loader.hide();
           if (!this.isEnoughMoney(this.giveCoin, this.giveAmount, this.txFee)) return;
 
           result = await this.sendTransaction(data, options, this.sdk.sellAllCoins, this.confirmParams);
           break;
         case 'buy':
           this.txFee = await this.getTxFee(this.TX_TYPE.COIN_BUY, data, options);
+          this.$refs.loader.hide();
           if (!this.isEnoughMoney(this.giveCoin, this.giveAmount, this.txFee)) return;
 
           result = await this.sendTransaction(data, options, this.sdk.buyCoins, this.confirmParams);
           break;
         default:
+          this.$refs.loader.hide();
           throw new Error('invalid mode');
       }
       if (result) {

@@ -64,12 +64,7 @@ module.exports = {
         en: localeEN,
       },
     },
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      alwaysRedirect: true,
-      fallbackLocale: 'ru',
-    },
+    detectBrowserLanguage: false,
   },
   plugins: [
     { src: '~/plugins/i18n.js', mode: 'client', ssr: false },

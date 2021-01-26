@@ -2,6 +2,7 @@
   <section class="content-wrap">
     <LeftMenu :title="$t('wallet.title')" />
     <div class="container__main">
+      <Loader ref="loader" />
       <div
         v-if="wallet"
         class="content"
@@ -79,10 +80,11 @@ import { mapGetters } from 'vuex';
 import LeftMenu from '~/components/LeftMenu';
 import pagination from '~/components/UI/pagination';
 import TxsTable from '~/components/UI/TxsTable';
+import Loader from '~/components/loader';
 
 export default {
   components: {
-    LeftMenu, pagination, TxsTable,
+    LeftMenu, pagination, TxsTable, Loader,
   },
   middleware: 'auth',
   data() {
@@ -116,8 +118,10 @@ export default {
     },
   },
   watch: {
-    currentPage() {
-      this.getTxs();
+    async currentPage() {
+      this.$refs.loader.show();
+      await this.getTxs();
+      this.$refs.loader.hide();
     },
     sdk(oldVal, newVal) {
       if (oldVal !== newVal) {
@@ -132,9 +136,11 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
     if (this.sdk) {
-      this.getTxs();
+      this.$refs.loader.show();
+      await this.getTxs();
+      this.$refs.loader.hide();
     }
   },
   methods: {

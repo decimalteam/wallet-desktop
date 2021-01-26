@@ -201,15 +201,15 @@
       <div class="change-lang-box">
         <div
           class="item"
-          :class="{ active: lang === 'En' }"
-          @click="changeLang('En')"
+          :class="{ active: $i18n.locale === 'en' }"
+          @click="changeLang('en')"
         >
           En
         </div>
         <div
           class="item"
-          :class="{ active: lang === 'Ru' }"
-          @click="changeLang('Ru')"
+          :class="{ active: $i18n.locale === 'ru' }"
+          @click="changeLang('ru')"
         >
           Ru
         </div>
@@ -242,21 +242,13 @@ export default {
       menuOpen: false,
     };
   },
-  computed: {
-    lang: {
-      get() {
-        return this.$i18n.locale === 'ru' ? 'Ru' : 'En';
-      },
-      set(lang) {
-        const setLang = lang.toLowerCase();
-        this.$i18n.locale = setLang;
-        this.$i18n.setLocaleCookie(setLang);
-      },
-    },
+  mounted() {
+    this.$i18n.locale = localStorage.getItem('lang');
   },
   methods: {
     changeLang(lang) {
-      this.lang = lang;
+      localStorage.setItem('lang', lang);
+      this.$i18n.locale = lang;
     },
     async logout() {
       const isConfirm = await this.$confirm.open({

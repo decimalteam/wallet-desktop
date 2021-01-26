@@ -5,6 +5,7 @@
     tag="div"
     class="send-coins-wrap"
   >
+    <Loader ref="loader" />
     <button
       class="icon-btn back"
       @click="back()"
@@ -101,10 +102,11 @@ import CustomInput from '~/components/UI/Input';
 import CustomSwitch from '~/components/UI/Switch';
 import CustomDropdown from '~/components/UI/Dropdown';
 import CustomTextarea from '~/components/UI/Textarea';
+import Loader from '~/components/loader';
 
 export default {
   components: {
-    CustomInput, CustomSwitch, CustomDropdown, CustomTextarea,
+    CustomInput, CustomSwitch, CustomDropdown, CustomTextarea, Loader,
   },
   props: {
     coin: {
@@ -169,8 +171,9 @@ export default {
         feeCoin: this.feeCoin.toLowerCase(),
         message: this.message,
       };
-
+      this.$refs.loader.show();
       this.txFee = await this.getTxFee(this.TX_TYPE.COIN_SEND, data, options);
+      this.$refs.loader.hide();
       if (!this.isEnoughMoney(this.coin.coin, this.amount, this.txFee)) return;
 
       const result = await this.sendTransaction(data, options, this.sdk.sendCoins, this.confirmParams);
