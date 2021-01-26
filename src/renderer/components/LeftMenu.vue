@@ -243,7 +243,11 @@ export default {
     };
   },
   mounted() {
-    this.$i18n.locale = localStorage.getItem('lang');
+    if (localStorage.getItem('lang')) {
+      this.$i18n.locale = localStorage.getItem('lang');
+    } else {
+      this.$i18n.locale = 'ru';
+    }
   },
   methods: {
     changeLang(lang) {
