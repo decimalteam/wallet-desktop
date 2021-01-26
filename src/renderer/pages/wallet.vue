@@ -123,9 +123,10 @@ export default {
       await this.getTxs();
       this.$refs.loader.hide();
     },
-    sdk(oldVal, newVal) {
+    async sdk(oldVal, newVal) {
       if (oldVal !== newVal) {
-        this.getTxs();
+        await this.getTxs();
+        this.$refs.loader.hide();
       }
     },
     txs(oldVal, newVal) {
@@ -141,6 +142,8 @@ export default {
       this.$refs.loader.show();
       await this.getTxs();
       this.$refs.loader.hide();
+    } else {
+      this.$refs.loader.show();
     }
   },
   methods: {
