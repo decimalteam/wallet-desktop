@@ -4101,10 +4101,10 @@ decamelize@^1.1.1, decamelize@^1.1.2, decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
-decimal-js-sdk@^0.1.47:
-  version "0.1.47"
-  resolved "https://registry.yarnpkg.com/decimal-js-sdk/-/decimal-js-sdk-0.1.47.tgz#5333b82fb703d996fedf05b8e7af36e3ca1d4c80"
-  integrity sha512-tUf4+BtiCta5kB0yth7ACywzmmrozJb/ZJWPWAjMW7iLLlOwxSRDp+7TmMKujbNvLmNWkwy98CT8xOzk2SsIDA==
+decimal-js-sdk@^0.1.61:
+  version "0.1.61"
+  resolved "https://registry.yarnpkg.com/decimal-js-sdk/-/decimal-js-sdk-0.1.61.tgz#b66dbd38df503e36dc331fc554df04fe463fad61"
+  integrity sha512-GuV8tN6AlE3GULGU9WlJXYUYi/bCK6WOKdB8SE3mNBWdGfbK3DnPxJeyXpNl6rhv6ptJxBQtaasc8w/idxDf6Q==
   dependencies:
     "@tendermint/belt" "^0.3.0"
     "@tendermint/sig" "^0.4.1"

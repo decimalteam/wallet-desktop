@@ -3,6 +3,7 @@ import DecimalNumber from 'decimal.js';
 DecimalNumber.set({ precision: 40 });
 
 export default {
+  getPrice: (state) => state.price,
   getWallet: (state) => state.wallet,
   getBalance: (state, getters, rootState) => {
     const baseCoin = rootState.decimal.baseCoin.toLowerCase();

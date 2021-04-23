@@ -79,8 +79,14 @@ Vue.mixin({
       };
       return new Date(date).toLocaleString(lang, timeFormatOptions);
     },
-    conversionToDollars(amount) {
-      return amount ? amount * 0.25 : 0;
+    async conversionToDollars(coin, balance) {
+      let info;
+      let price;
+      await Promise.all([
+        info = await this.sdk.getCoin(coin.toLowerCase()),
+        price = await this.$store.dispatch('wallet/GET_DEL_RATE'),
+      ]);
+      return coin.toLowerCase() === 'del' ? DecimalNumber(balance).mul(DecimalNumber(price)) : DecimalNumber(balance).mul(DecimalNumber(info.price).mul(DecimalNumber(price)));
     },
     copyText(text) {
       const copyText = text;

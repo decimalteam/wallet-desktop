@@ -14,4 +14,7 @@ export default {
   setBaseCoinInfo(state, baseCoinInfo) {
     state.baseCoinInfo = baseCoinInfo;
   },
+  setPrice(state, price) {
+    state.price = price;
+  },
 };

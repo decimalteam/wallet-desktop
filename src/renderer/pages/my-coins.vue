@@ -45,7 +45,7 @@
               </div>
             </div>
             <div class="cost">
-              $ {{ conversionToDollars(coins[coinPage].balance) ? (formatAmount(conversionToDollars(coins[coinPage].balance), 2)) : 0 }}
+              $ {{ coinPrice | formatAmount(currentLocale, 2) }}
             </div>
           </div>
           <template v-if="txsData.length">
@@ -139,6 +139,7 @@ export default {
       perPage: 10,
       currentPage: 1,
       rows: 0,
+      coinPrice: 0,
 
       txsData: [],
 
@@ -154,6 +155,7 @@ export default {
       coins: 'wallet/getMyCoins',
       txs: 'wallet/getMyTxs',
       sdk: 'decimal/getSDK',
+      balance: 'wallet/getBalance',
     }),
     activeCoinPageTitle() {
       return this.coins[this.coinPage] ? this.coins[this.coinPage].coin : '';
@@ -170,6 +172,11 @@ export default {
       this.$refs.loader.show();
       await this.getTxs();
       this.$refs.loader.hide();
+    },
+    async balance() {
+      const coin = this.coins[this.coinPage] ? this.coins[this.coinPage].coin.toLowerCase() : this.BASE_COIN.toLowerCase();
+      const balance = this.coins[this.coinPage] ? this.coins[this.coinPage].balance : this.balance;
+      this.coinPrice = await this.conversionToDollars(coin, balance);
     },
     async sdk(oldVal, newVal) {
       if (oldVal !== newVal) {
@@ -197,10 +204,14 @@ export default {
   methods: {
     async getTxs() {
       const coin = this.coins[this.coinPage] ? this.coins[this.coinPage].coin.toLowerCase() : this.BASE_COIN.toLowerCase();
+      const balance = this.coins[this.coinPage] ? this.coins[this.coinPage].balance : this.balance;
       const limit = this.perPage;
       const offset = (this.currentPage - 1) * limit;
-      const data = await this.sdk.getMyTransactions(limit, offset, '', coin);
-
+      let data;
+      await Promise.all([
+        data = await this.sdk.getMyTransactions(limit, offset, '', coin),
+        this.coinPrice = await this.conversionToDollars(coin, balance),
+      ]);
       this.rows = data.count;
       this.txsData = data.txs;
     },

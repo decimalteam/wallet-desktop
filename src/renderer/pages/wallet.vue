@@ -20,7 +20,7 @@
                 {{ balance | formatAmount(currentLocale, 8) }}<span class="currency">{{ BASE_COIN }}</span>
               </div>
               <div class="cost">
-                $ {{ conversionToDollars(balance) ? (formatAmount(conversionToDollars(balance), 2)) : 0 }}
+                $ {{ coinPrice | formatAmount(currentLocale, 2) }}
               </div>
             </div>
           </div>
@@ -92,6 +92,7 @@ export default {
       perPage: 10,
       currentPage: 1,
       rows: 0,
+      coinPrice: 0,
 
       copiedStatus: false,
 
@@ -129,6 +130,9 @@ export default {
         this.$refs.loader.hide();
       }
     },
+    async balance() {
+      this.coinPrice = await this.conversionToDollars(this.BASE_COIN, this.balance);
+    },
     txs(oldVal, newVal) {
       if (oldVal[0] && newVal[0]) {
         if (oldVal[0].id !== newVal[0].id) {
@@ -150,8 +154,11 @@ export default {
     async getTxs() {
       const limit = this.perPage;
       const offset = (this.currentPage - 1) * limit;
-      const data = await this.sdk.getMyTransactions(limit, offset);
-
+      let data;
+      await Promise.all([
+        this.coinPrice = await this.conversionToDollars(this.BASE_COIN, this.balance),
+        data = await this.sdk.getMyTransactions(limit, offset),
+      ]);
       this.rows = data.count;
       this.txsData = data.txs;
     },
