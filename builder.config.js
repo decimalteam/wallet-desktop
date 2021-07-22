@@ -21,37 +21,40 @@ const linuxOS = {
 }
 
 const macOS = {
-  mac: {
-    type: 'distribution',
-    target: ['mas', 'pkg', 'dmg'],
-    artifactName: '${productName}-${version}-${os}.${ext}',
-    category: 'public.app-category.utilities',
-    provisioningProfile: 'mac_app_store-2.provisionprofile',
-    icon: ICONS_DIR + 'icon.icns'
-  },
-  mas: {
-    hardenedRuntime: false,
-    type: 'distribution',
-    category: 'public.app-category.utilities',
-    entitlements: 'build/entitlements.mas.plist',
-    entitlementsInherit: 'build/entitlements.mas.inherit.plist',
-    icon: ICONS_DIR + 'icon.icns'
-  },
-  dmg: {
-    contents: [
-      {
-        x: 410,
-        y: 150,
-        type: 'link',
-        path: '/Applications'
-      },
-      {
-        x: 130,
-        y: 150,
-        type: 'file'
-      }
-    ]
-  }
+    mac: {
+      hardenedRuntime: true,
+      target: 'default',
+      artifactName: '${productName}-${version}-${os}.${ext}',
+      category: 'public.app-category.utilities',
+      provisioningProfile: 'mac_app_store.provisionprofile',
+      icon: ICONS_DIR + 'icon.icns',
+      entitlements: 'build/entitlements.mas.plist',
+      entitlementsInherit: 'build/entitlements.mas.inherit.plist',
+      gatekeeperAssess: false
+    },
+  // mas: {
+  //   hardenedRuntime: false,
+  //   type: 'distribution',
+  //   category: 'public.app-category.utilities',
+  //   entitlements: 'build/entitlements.mas.plist',
+  //   entitlementsInherit: 'build/entitlements.mas.inherit.plist',
+  //   icon: ICONS_DIR + 'icon.icns'
+  // },
+  // dmg: {
+  //   contents: [
+  //     {
+  //       x: 410,
+  //       y: 150,
+  //       type: 'link',
+  //       path: '/Applications'
+  //     },
+  //     {
+  //       x: 130,
+  //       y: 150,
+  //       type: 'file'
+  //     }
+  //   ]
+  // }
 }
 
 module.exports = {

@@ -13,7 +13,11 @@ const NuxtApp = require('./renderer/NuxtApp')
 
 const isDev = process.env.NODE_ENV === 'development'
 
+const electronLogger = new Logger('Electron', 'teal')
+electronLogger.ignore(text => text.includes('nhdogjmejiglipccpnnnanhbledajbpd')) // Clear vue devtools errors
+
 const launcher = new ElectronLauncher({
+  logger: electronLogger,
   electronPath: electron,
   entryFile: path.join(DIST_DIR, 'main/index.js')
 })
@@ -31,8 +35,8 @@ const builder = new ElectronBuilder({
 
 const webpackConfig = Webpack.getBaseConfig({
   entry: isDev
-    ? path.join(MAIN_PROCESS_DIR, 'index.dev.js')
-    : path.join(MAIN_PROCESS_DIR, 'index.js'),
+    ? path.join(MAIN_PROCESS_DIR, 'boot/index.dev.js')
+    : path.join(MAIN_PROCESS_DIR, 'boot/index.prod.js'),
   output: {
     filename: 'index.js',
     path: path.join(DIST_DIR, 'main')
