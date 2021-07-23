@@ -82,7 +82,6 @@ export default class BrowserWinHandler {
   }
 
   /**
-   *
    * @returns {Promise<BrowserWindow>}
    */
   created () {
