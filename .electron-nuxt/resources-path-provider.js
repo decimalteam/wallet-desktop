@@ -4,13 +4,16 @@ const RESOURCES_DIR_PATH = RESOURCES_DIR.replace(/\\/g, '/')
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-function staticPath () {
+function devPath ()  {
   // resolve during compilation
   return `
     global.__resources = \`${RESOURCES_DIR_PATH}\`;
   `
 }
 
+function productionPath () {
+  return `process.resourcesPath`; // Keep path provided by Electron
+}
 function pathFromRendererOnRuntime () {
   // resolve on runtime
   // path depends on production directory structure
@@ -32,16 +35,20 @@ function pathFromMainOnRuntime () {
     global.__resources = require('path').join(__dirname, '..', 'resources');
   `
 }
-
 module.exports = {
 
+  // MAIN PROCESS
+
   mainProcess () {
-    return isProduction ? pathFromMainOnRuntime() : staticPath()
+    return isProduction ? productionPath() : devPath()
   },
+
+  // RENDERER PROCESS
 
   nuxtClient () {
-    return isProduction ? pathFromRendererOnRuntime() : staticPath()
+    return isProduction ? productionPath() : devPath()
   },
 
-  nuxtServer: staticPath
+  nuxtServer: devPath
+
 }
