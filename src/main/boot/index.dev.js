@@ -25,7 +25,6 @@ app.on('ready', () => {
   installExtension(VUEJS_DEVTOOLS)
 })
 
-
 const handleProcessExit = () => {
   app.exit(0)
   process.exit(0)
